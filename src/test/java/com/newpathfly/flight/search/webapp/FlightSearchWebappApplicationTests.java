@@ -1,4 +1,4 @@
-package com.newpathfly.flightsearchwebapp;
+package com.newpathfly.flight.search.webapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

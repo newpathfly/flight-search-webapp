@@ -1,4 +1,4 @@
-package com.newpathfly.flightsearchwebapp.view;
+package com.newpathfly.flight.search.webapp.view;
 
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

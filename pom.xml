@@ -45,6 +45,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.newpathfly</groupId>
+            <artifactId>newpathfly-public-sdk</artifactId>
+            <version>2.3.8</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

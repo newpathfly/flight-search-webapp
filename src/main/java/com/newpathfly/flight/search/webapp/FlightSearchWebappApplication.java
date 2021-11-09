@@ -1,4 +1,4 @@
-package com.newpathfly.flightsearchwebapp;
+package com.newpathfly.flight.search.webapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
