@@ -1,7 +1,6 @@
 package com.newpathfly.flight.search.webapp.view;
 
 import com.newpathfly.flight.search.webapp.component.SearchComponent;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 

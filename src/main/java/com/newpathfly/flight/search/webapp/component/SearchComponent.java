@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.newpathfly.model.SearchRequest;
 import com.newpathfly.model.TripType;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.customfield.CustomField;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -57,8 +56,8 @@ public class SearchComponent extends CustomField<SearchRequest> {
                 _depAirportTextField, //
                 _arrAirportTextField, //
                 _depDatePicker, //
-                _retDatePicker, //
-                new Button("Search", VaadinIcon.SEARCH.create()));
+                _retDatePicker//
+        );
 
         layout.setAlignItems(Alignment.END);
         layout.setJustifyContentMode(JustifyContentMode.CENTER);
