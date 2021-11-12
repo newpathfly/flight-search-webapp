@@ -1,14 +1,10 @@
 package com.newpathfly.flight.search.webapp.event;
 
-import org.springframework.context.ApplicationEvent;
-
-public class ErrorEvent extends ApplicationEvent {
+public class ErrorEvent implements IEvent {
 
     private final String _message;
 
     public ErrorEvent(String message) {
-        super(message);
-
         _message = message;
     }
 

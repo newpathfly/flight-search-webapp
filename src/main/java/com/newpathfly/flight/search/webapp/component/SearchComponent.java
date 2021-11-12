@@ -57,6 +57,22 @@ public class SearchComponent extends CustomField<SearchRequest> {
         add(buildHorizontalLayout());
     }
 
+    public TextField getDepAirportTextField() {
+        return _depAirportTextField;
+    }
+
+    public TextField getArrAirportTextField() {
+        return _arrAirportTextField;
+    }
+
+    public DatePicker getDepDatePicker() {
+        return _depDatePicker;
+    }
+
+    public DatePicker getRetDatePicker() {
+        return _retDatePicker;
+    }
+
     @Override
     protected SearchRequest generateModelValue() {
 
@@ -66,16 +82,18 @@ public class SearchComponent extends CustomField<SearchRequest> {
 
         queries.add( //
                 new Query() //
+                        .depCity("") //
                         .depAirport(_depAirportTextField.getValue()) //
-                        .arrAirport(_arrAirportTextField.getValue()) //
+                        .arrCity("").arrAirport(_arrAirportTextField.getValue()) //
                         .date(_depDatePicker.getValue().format(DATE_FORMAT_YYYYMMDD)) //
         );
 
         if (TripType.RT.equals(tripType)) {
             queries.add( //
                     new Query() //
+                            .depCity("") //
                             .depAirport(_arrAirportTextField.getValue()) //
-                            .arrAirport(_depAirportTextField.getValue()) //
+                            .arrCity("").arrAirport(_depAirportTextField.getValue()) //
                             .date(_retDatePicker.getValue().format(DATE_FORMAT_YYYYMMDD)) //
             );
         }
