@@ -1,8 +1,8 @@
 package com.newpathfly.flight.search.webapp.registry;
 
-import com.newpathfly.flight.search.webapp.event.ErrorEvent;
+import com.newpathfly.flight.search.webapp.event.LogEvent;
 import com.newpathfly.flight.search.webapp.registry.common.Registry;
 
-public class ErrorEventRegistry extends Registry<ErrorEvent> {
+public class LogEventRegistry extends Registry<LogEvent> {
     
 }

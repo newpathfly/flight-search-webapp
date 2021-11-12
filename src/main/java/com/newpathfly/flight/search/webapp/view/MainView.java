@@ -1,18 +1,19 @@
 package com.newpathfly.flight.search.webapp.view;
 
 import com.newpathfly.api.ShoppingApi;
+import com.newpathfly.flight.search.webapp.component.LogNotification;
 import com.newpathfly.flight.search.webapp.component.SearchButton;
-import com.newpathfly.flight.search.webapp.component.SearchComponent;
+import com.newpathfly.flight.search.webapp.component.SearchRequestComponent;
+import com.newpathfly.flight.search.webapp.component.SearchResultComponent;
 import com.newpathfly.flight.search.webapp.event.CancelPollingEvent;
-import com.newpathfly.flight.search.webapp.event.ErrorEvent;
-import com.newpathfly.flight.search.webapp.event.SearchResponseEvent;
+import com.newpathfly.flight.search.webapp.event.LogEvent;
+import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
 import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
-import com.newpathfly.flight.search.webapp.registry.ErrorEventRegistry;
-import com.newpathfly.flight.search.webapp.registry.SearchResponseEventRegistry;
+import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
+import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
 import com.newpathfly.model.SearchRequest;
+import com.newpathfly.model.SearchResultPoll;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
@@ -28,8 +29,10 @@ public class MainView extends VerticalLayout {
     private final transient ShoppingApi _shoppingApi;
 
     // UI
-    private final SearchComponent _searchComponent;
+    private final SearchRequestComponent _searchComponent;
     private final SearchButton _searchButton;
+    private final SearchResultComponent _searchResultComponent;
+
     private final UI _currentUI;
 
     public MainView(@Autowired ShoppingApi shoppingApi) {
@@ -37,8 +40,9 @@ public class MainView extends VerticalLayout {
         _shoppingApi = shoppingApi;
 
         // constructors
-        _searchComponent = new SearchComponent();
+        _searchComponent = new SearchRequestComponent();
         _searchButton = new SearchButton();
+        _searchResultComponent = new SearchResultComponent(shoppingApi);
         _currentUI = UI.getCurrent();
 
         // UI listeners
@@ -73,23 +77,20 @@ public class MainView extends VerticalLayout {
 
             // proceed the search and subscribe to the response
             _shoppingApi.createSearch(searchRequest).subscribe( //
-                    r -> fire(new SearchResponseEvent(r)), //
-                    exception -> fire(new ErrorEvent(exception.getMessage())), //
-                    () -> {
-                        // thing to do upon completion
-                    } //
+                    r -> {
+                        SearchResultPoll searchResultPoll = new SearchResultPoll() //
+                                .requestId(r.getRequestId()) //
+                                .offset(0); //
+
+                        fire(new SearchResultPollEvent(searchResultPoll));
+                    }, //
+                    exception -> fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage())) //
             );
         });
 
         // event listeners
-        _currentUI.getSession().getAttribute(ErrorEventRegistry.class).register(e -> {
-            _currentUI.access(() -> {
-                Notification notification = new Notification(e.getMessage());
-                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-                notification.setDuration(10000);
-                notification.setPosition(Position.MIDDLE);
-                notification.open();
-            });
+        _currentUI.getSession().getAttribute(LogEventRegistry.class).register(e -> {
+            _currentUI.access(() -> LogNotification.send(e.getVariant(), e.getMessage()));
         });
 
         // misc settings
@@ -98,21 +99,23 @@ public class MainView extends VerticalLayout {
 
         add( //
                 _searchComponent, //
-                _searchButton);
+                _searchButton, //
+                _searchResultComponent //
+        );
     }
 
-    private void fire(ErrorEvent e) {
+    private void fire(LogEvent e) {
         getUI().orElseThrow(() -> new RuntimeException("current compoent not attached to a UI - can't fire ErrorEvent"))
                 .access(() -> {
-                    _currentUI.getSession().getAttribute(ErrorEventRegistry.class).sentEvent(e);
+                    _currentUI.getSession().getAttribute(LogEventRegistry.class).sentEvent(e);
                 });
     }
 
-    private void fire(SearchResponseEvent e) {
+    private void fire(SearchResultPollEvent e) {
         getUI().orElseThrow(
                 () -> new RuntimeException("current compoent not attached to a UI - can't fire SearchResponseEvent"))
                 .access(() -> {
-                    _currentUI.getSession().getAttribute(SearchResponseEventRegistry.class).sentEvent(e);
+                    _currentUI.getSession().getAttribute(SearchResultPollEventRegistry.class).sentEvent(e);
                 });
     }
 

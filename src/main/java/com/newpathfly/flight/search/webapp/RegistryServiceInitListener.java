@@ -1,8 +1,8 @@
 package com.newpathfly.flight.search.webapp;
 
 import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
-import com.newpathfly.flight.search.webapp.registry.ErrorEventRegistry;
-import com.newpathfly.flight.search.webapp.registry.SearchResponseEventRegistry;
+import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
+import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
 import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.UIInitEvent;
 import com.vaadin.flow.server.UIInitListener;
@@ -18,8 +18,8 @@ public class RegistryServiceInitListener implements VaadinServiceInitListener, U
     @Override
     public void uiInit(UIInitEvent uiInitEvent) {
         final VaadinSession session = uiInitEvent.getUI().getSession();
-        session.setAttribute(ErrorEventRegistry.class, new ErrorEventRegistry());
+        session.setAttribute(LogEventRegistry.class, new LogEventRegistry());
         session.setAttribute(CancelPollingEventRegistry.class, new CancelPollingEventRegistry());
-        session.setAttribute(SearchResponseEventRegistry.class, new SearchResponseEventRegistry());
+        session.setAttribute(SearchResultPollEventRegistry.class, new SearchResultPollEventRegistry());
     }
 }
