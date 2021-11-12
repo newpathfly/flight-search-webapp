@@ -22,6 +22,8 @@ public class SearchResultComponent extends VerticalLayout {
     // Logic
     private final transient ShoppingApi _shoppingApi;
 
+    private String _currentRequestId;
+
     // UI
     private final TripListComponent _tripListComponent;
     private final UI _currentUI;
@@ -36,14 +38,21 @@ public class SearchResultComponent extends VerticalLayout {
 
         // event listeners
         _currentUI.getSession().getAttribute(CancelPollingEventRegistry.class).register(e -> {
-            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, "Search polling is getting cancelled."));
+            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
+                    "Search polling is getting cancelled."));
 
-            // @todo do something here
+            _currentRequestId = null;
         });
 
         _currentUI.getSession().getAttribute(SearchResultPollEventRegistry.class).register(e -> {
 
-            SearchResultPoll searchResultPoll = e.getSearchResultPoll();
+            if (null == _currentRequestId || _currentRequestId.isEmpty()) {
+                return;
+            }
+
+            SearchResultPoll searchResultPoll = new SearchResultPoll() //
+                    .requestId(_currentRequestId) //
+                    .offset(_tripListComponent.getTripComponents().size()); //
 
             _shoppingApi.createPollWithHttpInfo(searchResultPoll).subscribe( //
                     r -> {
@@ -65,11 +74,7 @@ public class SearchResultComponent extends VerticalLayout {
                                 Thread.currentThread().interrupt();
                             }
 
-                            SearchResultPoll newSearchResultPoll = new SearchResultPoll() //
-                                    .requestId(searchResultPoll.getRequestId()) //
-                                    .offset(offset); //
-
-                            fire(new SearchResultPollEvent(newSearchResultPoll));
+                            fire(new SearchResultPollEvent());
                         } else {
                             fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
                                     "Full content received - no more polling."));
@@ -87,6 +92,10 @@ public class SearchResultComponent extends VerticalLayout {
         add( //
                 _tripListComponent //
         );
+    }
+
+    public void setCurrentRequestId(String currentRequestId) {
+        _currentRequestId = currentRequestId;
     }
 
     public void clear() {

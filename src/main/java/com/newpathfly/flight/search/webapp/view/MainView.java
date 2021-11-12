@@ -12,7 +12,6 @@ import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
 import com.newpathfly.model.SearchRequest;
-import com.newpathfly.model.SearchResultPoll;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -84,6 +83,8 @@ public class MainView extends VerticalLayout {
                                 String.format("Search request sent successfuly. (RequestId: `%s`, Message: `%s`)",
                                         r.getRequestId(), r.getMessage())));
 
+                        _searchResultComponent.setCurrentRequestId(r.getRequestId());
+
                         try {
                             Thread.sleep(3000);
                         } catch (InterruptedException exception) {
@@ -91,11 +92,7 @@ public class MainView extends VerticalLayout {
                             Thread.currentThread().interrupt();
                         }
 
-                        SearchResultPoll searchResultPoll = new SearchResultPoll() //
-                                .requestId(r.getRequestId()) //
-                                .offset(0); //
-
-                        fire(new SearchResultPollEvent(searchResultPoll));
+                        fire(new SearchResultPollEvent());
                     }, //
                     exception -> fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage())) //
             );
