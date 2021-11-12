@@ -1,15 +1,21 @@
 package com.newpathfly.flight.search.webapp.component;
 
 import com.newpathfly.api.ShoppingApi;
+import com.newpathfly.flight.search.webapp.event.LogEvent;
 import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
+import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
 import com.newpathfly.model.PollResponse;
 import com.newpathfly.model.SearchResultPoll;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class SearchResultComponent extends VerticalLayout {
 
     // Logic
@@ -39,14 +45,29 @@ public class SearchResultComponent extends VerticalLayout {
                         pollResponse.getTrips().forEach(_tripListComponent::add);
 
                         if (HttpStatus.PARTIAL_CONTENT.equals(r.getStatusCode())) {
+                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
+                                    "Partial content received - continue polling per 3 seconds."));
+
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException exception) {
+                                fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
+                                Thread.currentThread().interrupt();
+                            }
+
                             SearchResultPoll newSearchResultPoll = new SearchResultPoll() //
-                                .requestId(searchResultPoll.getRequestId()) //
-                                .offset(pollResponse.getTrips().size()); //
+                                    .requestId(searchResultPoll.getRequestId()) //
+                                    .offset(pollResponse.getTrips().size()); //
 
                             fire(new SearchResultPollEvent(newSearchResultPoll));
+                        } else {
+                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
+                                    "Full content received - no more polling."));
                         }
                     }, //
                     exception -> {
+                        log.error("error when creating poll", exception);
+                        fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
                     } //
             );
         });
@@ -56,6 +77,13 @@ public class SearchResultComponent extends VerticalLayout {
         add( //
                 _tripListComponent //
         );
+    }
+
+    private void fire(LogEvent e) {
+        getUI().orElseThrow(() -> new RuntimeException("current compoent not attached to a UI - can't fire ErrorEvent"))
+                .access(() -> {
+                    _currentUI.getSession().getAttribute(LogEventRegistry.class).sentEvent(e);
+                });
     }
 
     private void fire(SearchResultPollEvent e) {

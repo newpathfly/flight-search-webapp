@@ -78,6 +78,17 @@ public class MainView extends VerticalLayout {
             // proceed the search and subscribe to the response
             _shoppingApi.createSearch(searchRequest).subscribe( //
                     r -> {
+                        fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
+                                String.format("Search request sent successfuly. (RequestId: `%s`, Message: `%s`)",
+                                        r.getRequestId(), r.getMessage())));
+
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException exception) {
+                            fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
+                            Thread.currentThread().interrupt();
+                        }
+
                         SearchResultPoll searchResultPoll = new SearchResultPoll() //
                                 .requestId(r.getRequestId()) //
                                 .offset(0); //

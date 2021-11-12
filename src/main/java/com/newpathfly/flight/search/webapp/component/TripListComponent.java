@@ -7,7 +7,6 @@ import com.newpathfly.model.Trip;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 public class TripListComponent extends HorizontalLayout {
-    
 
     private final List<TripComponent> _tripComponents;
 
@@ -19,7 +18,10 @@ public class TripListComponent extends HorizontalLayout {
         TripComponent tripComponent = new TripComponent(trip);
 
         _tripComponents.add(tripComponent);
-        add(tripComponent);
+
+        getUI().orElseThrow(
+                () -> new RuntimeException("current compoent not attached to a UI - can't add tripComponent"))
+                .access(() -> add(tripComponent));
     }
 
     public void clear() {
