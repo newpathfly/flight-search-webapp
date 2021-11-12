@@ -1,5 +1,7 @@
 package com.newpathfly.flight.search.webapp.event;
 
+import com.newpathfly.flight.search.webapp.event.common.IEvent;
+
 public class ErrorEvent implements IEvent {
 
     private final String _message;

@@ -1,5 +1,6 @@
 package com.newpathfly.flight.search.webapp.event;
 
+import com.newpathfly.flight.search.webapp.event.common.IEvent;
 import com.newpathfly.model.SearchResponse;
 
 public class SearchResponseEvent implements IEvent {
