@@ -11,19 +11,16 @@ import com.newpathfly.flight.search.webapp.event.SearchResponseEvent;
 import com.newpathfly.model.SearchRequest;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.notification.Notification.Position;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Push
 @Route(value = "")
-@Theme(value = Lumo.class, variant = Lumo.DARK)
 public class MainView extends VerticalLayout {
 
     // Logic
@@ -98,6 +95,7 @@ public class MainView extends VerticalLayout {
 
         });
 
+        // misc settings
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
