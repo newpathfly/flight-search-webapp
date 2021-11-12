@@ -20,7 +20,7 @@ public class TripListComponent extends VerticalLayout {
         _tripComponents.add(tripComponent);
 
         getUI().orElseThrow(
-                () -> new RuntimeException("current compoent not attached to a UI - can't add tripComponent"))
+                () -> new RuntimeException("current component not attached to a UI - can't add tripComponent"))
                 .access(() -> add(tripComponent));
     }
 

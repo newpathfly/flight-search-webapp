@@ -1,9 +1,9 @@
 package com.newpathfly.flight.search.webapp.component;
 
 import com.newpathfly.model.Trip;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
-public class TripComponent extends VerticalLayout {
+public class TripComponent extends HorizontalLayout {
     
     private final Trip _trip;
 
