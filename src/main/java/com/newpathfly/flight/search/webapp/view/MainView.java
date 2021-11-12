@@ -1,13 +1,14 @@
 package com.newpathfly.flight.search.webapp.view;
 
 import com.newpathfly.api.ShoppingApi;
-import com.newpathfly.flight.search.webapp.EventRegistry;
 import com.newpathfly.flight.search.webapp.component.SearchButton;
 import com.newpathfly.flight.search.webapp.component.SearchComponent;
 import com.newpathfly.flight.search.webapp.event.CancelPollingEvent;
 import com.newpathfly.flight.search.webapp.event.ErrorEvent;
-import com.newpathfly.flight.search.webapp.event.IEvent;
 import com.newpathfly.flight.search.webapp.event.SearchResponseEvent;
+import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
+import com.newpathfly.flight.search.webapp.registry.ErrorEventRegistry;
+import com.newpathfly.flight.search.webapp.registry.SearchResponseEventRegistry;
 import com.newpathfly.model.SearchRequest;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
@@ -29,6 +30,7 @@ public class MainView extends VerticalLayout {
     // UI
     private final SearchComponent _searchComponent;
     private final SearchButton _searchButton;
+    private final UI _currentUI;
 
     public MainView(@Autowired ShoppingApi shoppingApi) {
 
@@ -37,6 +39,7 @@ public class MainView extends VerticalLayout {
         // constructors
         _searchComponent = new SearchComponent();
         _searchButton = new SearchButton();
+        _currentUI = UI.getCurrent();
 
         // UI listeners
         _searchButton.addClickListener(e -> {
@@ -79,20 +82,14 @@ public class MainView extends VerticalLayout {
         });
 
         // event listeners
-        UI.getCurrent().getSession().getAttribute(EventRegistry.class).register(e -> {
-
-            if (!(e instanceof ErrorEvent)) {
-                return;
-            }
-
-            UI.getCurrent().access(() -> {
-                Notification notification = new Notification(((ErrorEvent)e).getMessage());
+        _currentUI.getSession().getAttribute(ErrorEventRegistry.class).register(e -> {
+            _currentUI.access(() -> {
+                Notification notification = new Notification(e.getMessage());
                 notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
                 notification.setDuration(10000);
                 notification.setPosition(Position.MIDDLE);
                 notification.open();
             });
-
         });
 
         // misc settings
@@ -104,9 +101,26 @@ public class MainView extends VerticalLayout {
                 _searchButton);
     }
 
-    private void fire(IEvent e) {
-        getUI().get().access(() -> {
-            UI.getCurrent().getSession().getAttribute(EventRegistry.class).sentEvent(e);
-        });
+    private void fire(ErrorEvent e) {
+        getUI().orElseThrow(() -> new RuntimeException("current compoent not attached to a UI - can't fire ErrorEvent"))
+                .access(() -> {
+                    _currentUI.getSession().getAttribute(ErrorEventRegistry.class).sentEvent(e);
+                });
+    }
+
+    private void fire(SearchResponseEvent e) {
+        getUI().orElseThrow(
+                () -> new RuntimeException("current compoent not attached to a UI - can't fire SearchResponseEvent"))
+                .access(() -> {
+                    _currentUI.getSession().getAttribute(SearchResponseEventRegistry.class).sentEvent(e);
+                });
+    }
+
+    private void fire(CancelPollingEvent e) {
+        getUI().orElseThrow(
+                () -> new RuntimeException("current compoent not attached to a UI - can't fire CancelPollingEvent"))
+                .access(() -> {
+                    _currentUI.getSession().getAttribute(CancelPollingEventRegistry.class).sentEvent(e);
+                });
     }
 }

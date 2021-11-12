@@ -5,14 +5,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class Registry<E> {
-    private final Set<Consumer<E>> listeners = ConcurrentHashMap.newKeySet();
+    private final Set<Consumer<E>> _listeners = ConcurrentHashMap.newKeySet();
 
     public IRegistry register(Consumer<E> listener) {
-      listeners.add(listener);
-      return () -> listeners.remove(listener);
+      _listeners.add(listener);
+      return () -> _listeners.remove(listener);
     }
   
     public void sentEvent(E event) {
-      listeners.forEach(listener -> listener.accept(event));
+      _listeners.forEach(listener -> listener.accept(event));
     }
 }
