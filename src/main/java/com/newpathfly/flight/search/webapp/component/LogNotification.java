@@ -7,17 +7,19 @@ public class LogNotification extends Notification {
     private LogNotification(NotificationVariant variant, String message) {
         super(message);
         addThemeVariants(variant);
-        setPosition(Position.MIDDLE);
 
         switch(variant){
             case LUMO_ERROR:
                 setDuration(10000);
+                setPosition(Position.MIDDLE);
                 break;
             case LUMO_SUCCESS:
                 setDuration(3000);
+                setPosition(Position.BOTTOM_STRETCH);
                 break;
             default:
                 setDuration(1000);
+                setPosition(Position.BOTTOM_STRETCH);
                 break;
         }
     }

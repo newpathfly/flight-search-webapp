@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.newpathfly.model.Trip;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class TripListComponent extends HorizontalLayout {
+public class TripListComponent extends VerticalLayout {
 
     private final List<TripComponent> _tripComponents;
 
@@ -27,5 +27,9 @@ public class TripListComponent extends HorizontalLayout {
     public void clear() {
         remove(_tripComponents.toArray(new TripComponent[0]));
         _tripComponents.clear();
+    }
+
+    public List<TripComponent> getTripComponents() {
+        return _tripComponents;
     }
 }

@@ -3,6 +3,7 @@ package com.newpathfly.flight.search.webapp.component;
 import com.newpathfly.api.ShoppingApi;
 import com.newpathfly.flight.search.webapp.event.LogEvent;
 import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
+import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
 import com.newpathfly.model.PollResponse;
@@ -34,6 +35,12 @@ public class SearchResultComponent extends VerticalLayout {
         _currentUI = UI.getCurrent();
 
         // event listeners
+        _currentUI.getSession().getAttribute(CancelPollingEventRegistry.class).register(e -> {
+            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, "Search polling is getting cancelled."));
+
+            // @todo do something here
+        });
+
         _currentUI.getSession().getAttribute(SearchResultPollEventRegistry.class).register(e -> {
 
             SearchResultPoll searchResultPoll = e.getSearchResultPoll();
@@ -45,8 +52,11 @@ public class SearchResultComponent extends VerticalLayout {
                         pollResponse.getTrips().forEach(_tripListComponent::add);
 
                         if (HttpStatus.PARTIAL_CONTENT.equals(r.getStatusCode())) {
-                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
-                                    "Partial content received - continue polling per 3 seconds."));
+                            int offset = _tripListComponent.getTripComponents().size();
+
+                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, String.format(
+                                    "Partial content received - continue polling per 3 seconds. (RequestId: `%s`, Offset: `%s`)",
+                                    searchResultPoll.getRequestId(), offset)));
 
                             try {
                                 Thread.sleep(3000);
@@ -57,7 +67,7 @@ public class SearchResultComponent extends VerticalLayout {
 
                             SearchResultPoll newSearchResultPoll = new SearchResultPoll() //
                                     .requestId(searchResultPoll.getRequestId()) //
-                                    .offset(pollResponse.getTrips().size()); //
+                                    .offset(offset); //
 
                             fire(new SearchResultPollEvent(newSearchResultPoll));
                         } else {
@@ -77,6 +87,10 @@ public class SearchResultComponent extends VerticalLayout {
         add( //
                 _tripListComponent //
         );
+    }
+
+    public void clear() {
+        _tripListComponent.clear();
     }
 
     private void fire(LogEvent e) {

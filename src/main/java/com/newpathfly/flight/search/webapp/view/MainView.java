@@ -72,6 +72,8 @@ public class MainView extends VerticalLayout {
             // cancel any existing polling
             fire(new CancelPollingEvent());
 
+            _searchResultComponent.clear();
+
             // obtain the search request
             SearchRequest searchRequest = _searchComponent.getValue();
 
