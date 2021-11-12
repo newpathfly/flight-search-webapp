@@ -41,6 +41,8 @@ public class SearchComponent extends CustomField<SearchRequest> {
 
         _depDatePicker = buildDatePicker("Departure Date", LocalDate.now().plusWeeks(1), LocalDate.now().plusDays(1));
         _retDatePicker = buildDatePicker("Return Date", LocalDate.now().plusWeeks(2), _depDatePicker.getValue());
+
+
         _depDatePicker.addValueChangeListener(e -> {
             // whenever departure date changes, update minimum return date
             if (_retDatePicker.getValue().isBefore(e.getValue().plusDays(1))) {
@@ -48,6 +50,8 @@ public class SearchComponent extends CustomField<SearchRequest> {
             }
             _retDatePicker.setMin(e.getValue().plusDays(1));
         });
+
+        _retDatePicker.setEnabled(false);
 
         // create event handlers
         _tripTypeRadioButtonGroup.addValueChangeListener(e -> {
@@ -79,6 +83,14 @@ public class SearchComponent extends CustomField<SearchRequest> {
         TripType tripType = _tripTypeRadioButtonGroup.getValue();
 
         List<Query> queries = new ArrayList<>(TripType.OW.equals(tripType) ? 1 : 2);
+
+        if(_depAirportTextField.getValue().isEmpty() || _arrAirportTextField.getValue().isEmpty()) {
+            return null;
+        }
+
+        if(null == _depDatePicker.getValue() || null == _retDatePicker.getValue()) {
+            return null;
+        }
 
         queries.add( //
                 new Query() //
@@ -146,7 +158,7 @@ public class SearchComponent extends CustomField<SearchRequest> {
     private static RadioButtonGroup<TripType> buildTripTypeRadioButtonGroup() {
         RadioButtonGroup<TripType> radioButtonGroup = new RadioButtonGroup<>();
         radioButtonGroup.setItems(TripType.OW, TripType.RT);
-        radioButtonGroup.setValue(TripType.RT);
+        radioButtonGroup.setValue(TripType.OW);
         return radioButtonGroup;
     }
 
