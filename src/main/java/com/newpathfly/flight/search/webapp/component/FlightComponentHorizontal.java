@@ -13,13 +13,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 public class FlightComponentHorizontal extends HorizontalLayout {
     private final Flight _flight;
 
-    public FlightComponentHorizontal(Flight flight) {
+    public FlightComponentHorizontal(Flight flight, VaadinIcon icon) {
         // initialize
         _flight = flight;
 
         // construct
         
-        add(VaadinIcon.FLIGHT_TAKEOFF.create());
+        add(icon.create());
 
         List<Stop> stops = buildStops();
 
@@ -30,11 +30,9 @@ public class FlightComponentHorizontal extends HorizontalLayout {
 
         add(new StopComponentHorizontal(stops.get(stops.size() - 1)));
 
-        add(VaadinIcon.FLIGHT_LANDING.create());
-
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
-        setHeight("100px");
+        setHeight("90px");
     }
 
     public Flight getFlight() {

@@ -74,7 +74,7 @@ public class StopComponentHorizontal extends HorizontalLayout {
         verticalLayout.add(getTextDiv(""), getTextDiv(airport, "bold"), getTextDiv(getDuration()));
         verticalLayout.setAlignItems(Alignment.CENTER);
         verticalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        verticalLayout.setId("stop-layout");
+        verticalLayout.setClassName("stop-layout");
         verticalLayout.getStyle().remove("width");
         verticalLayout.setPadding(false);
         verticalLayout.setMargin(false);
