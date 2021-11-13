@@ -1,0 +1,1412 @@
+{
+  "currencyCode": "USD",
+  "trips": [
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:05",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "20:05",
+              "arrAirport": "BCN",
+              "flightNo": "AY1653",
+              "carrier": "AY"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "19:55",
+              "depAirport": "BCN",
+              "arrDate": "20211121",
+              "arrTime": "22:00",
+              "arrAirport": "STR",
+              "flightNo": "EW2521",
+              "carrier": "EW"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "14:25",
+              "depAirport": "STR",
+              "arrDate": "20211122",
+              "arrTime": "15:45",
+              "arrAirport": "BER",
+              "flightNo": "EW2004",
+              "carrier": "EW"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "BCN",
+          "carrier": "AY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:05",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "20:05",
+              "arrAirport": "BCN",
+              "flightNo": "AY1653",
+              "carrier": "AY"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "BCN",
+          "arrAirport": "STR",
+          "carrier": "EW",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "19:55",
+              "depAirport": "BCN",
+              "arrDate": "20211121",
+              "arrTime": "22:00",
+              "arrAirport": "STR",
+              "flightNo": "EW2521",
+              "carrier": "EW"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "STR",
+          "arrAirport": "BER",
+          "carrier": "EW",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "14:25",
+              "depAirport": "STR",
+              "arrDate": "20211122",
+              "arrTime": "15:45",
+              "arrAirport": "BER",
+              "flightNo": "EW2004",
+              "carrier": "EW"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 937.0799091326161,
+          "tax": 195.86,
+          "totalPrice": 1132.939909132616,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:00",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "18:30",
+              "arrAirport": "VIE",
+              "flightNo": "AY1475",
+              "carrier": "AY"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:55",
+              "depAirport": "VIE",
+              "arrDate": "20211121",
+              "arrTime": "17:05",
+              "arrAirport": "STR",
+              "flightNo": "EW2755",
+              "carrier": "EW"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "14:25",
+              "depAirport": "STR",
+              "arrDate": "20211122",
+              "arrTime": "15:45",
+              "arrAirport": "BER",
+              "flightNo": "EW2004",
+              "carrier": "EW"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "VIE",
+          "carrier": "AY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:00",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "18:30",
+              "arrAirport": "VIE",
+              "flightNo": "AY1475",
+              "carrier": "AY"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "VIE",
+          "arrAirport": "STR",
+          "carrier": "EW",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:55",
+              "depAirport": "VIE",
+              "arrDate": "20211121",
+              "arrTime": "17:05",
+              "arrAirport": "STR",
+              "flightNo": "EW2755",
+              "carrier": "EW"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "STR",
+          "arrAirport": "BER",
+          "carrier": "EW",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "14:25",
+              "depAirport": "STR",
+              "arrDate": "20211122",
+              "arrTime": "15:45",
+              "arrAirport": "BER",
+              "flightNo": "EW2004",
+              "carrier": "EW"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 1055.9334800432139,
+          "tax": 195.87,
+          "totalPrice": 1251.8034800432138,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:20",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:20",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "16:10",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "18:35",
+              "arrAirport": "FCO",
+              "flightNo": "AY1763",
+              "carrier": "AY"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:50",
+              "depAirport": "FCO",
+              "arrDate": "20211121",
+              "arrTime": "17:30",
+              "arrAirport": "STR",
+              "flightNo": "EW2885",
+              "carrier": "EW"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "14:25",
+              "depAirport": "STR",
+              "arrDate": "20211122",
+              "arrTime": "15:45",
+              "arrAirport": "BER",
+              "flightNo": "EW2004",
+              "carrier": "EW"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:20",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:20",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "FCO",
+          "carrier": "AY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "16:10",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "18:35",
+              "arrAirport": "FCO",
+              "flightNo": "AY1763",
+              "carrier": "AY"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "FCO",
+          "arrAirport": "STR",
+          "carrier": "EW",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:50",
+              "depAirport": "FCO",
+              "arrDate": "20211121",
+              "arrTime": "17:30",
+              "arrAirport": "STR",
+              "flightNo": "EW2885",
+              "carrier": "EW"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "STR",
+          "arrAirport": "BER",
+          "carrier": "EW",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "14:25",
+              "depAirport": "STR",
+              "arrDate": "20211122",
+              "arrTime": "15:45",
+              "arrAirport": "BER",
+              "flightNo": "EW2004",
+              "carrier": "EW"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 1056.0693979665832,
+          "tax": 195.86,
+          "totalPrice": 1251.929397966583,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "16:40",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "18:20",
+              "arrAirport": "AMS",
+              "flightNo": "AY1305",
+              "carrier": "AY"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:10",
+              "depAirport": "AMS",
+              "arrDate": "20211121",
+              "arrTime": "18:55",
+              "arrAirport": "RAK",
+              "flightNo": "HV5753",
+              "carrier": "HV"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "AMS",
+          "carrier": "AY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "16:40",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "18:20",
+              "arrAirport": "AMS",
+              "flightNo": "AY1305",
+              "carrier": "AY"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "AMS",
+          "arrAirport": "RAK",
+          "carrier": "HV",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:10",
+              "depAirport": "AMS",
+              "arrDate": "20211121",
+              "arrTime": "18:55",
+              "arrAirport": "RAK",
+              "flightNo": "HV5753",
+              "carrier": "HV"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "RAK",
+          "arrAirport": "BER",
+          "carrier": "U2",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 899.6660508946146,
+          "tax": 238.76493332938688,
+          "totalPrice": 1138.4309842240016,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "13:55",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "15:30",
+              "arrAirport": "AMS",
+              "flightNo": "KL1168",
+              "carrier": "KL"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:10",
+              "depAirport": "AMS",
+              "arrDate": "20211121",
+              "arrTime": "18:55",
+              "arrAirport": "RAK",
+              "flightNo": "HV5753",
+              "carrier": "HV"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "AMS",
+          "carrier": "KL",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "13:55",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "15:30",
+              "arrAirport": "AMS",
+              "flightNo": "KL1168",
+              "carrier": "KL"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "AMS",
+          "arrAirport": "RAK",
+          "carrier": "HV",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:10",
+              "depAirport": "AMS",
+              "arrDate": "20211121",
+              "arrTime": "18:55",
+              "arrAirport": "RAK",
+              "flightNo": "HV5753",
+              "carrier": "HV"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "RAK",
+          "arrAirport": "BER",
+          "carrier": "U2",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 1006.2160508946146,
+          "tax": 253.78493332938686,
+          "totalPrice": 1260.0009842240015,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "18:10",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "19:50",
+              "arrAirport": "AMS",
+              "flightNo": "KL1170",
+              "carrier": "KL"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:10",
+              "depAirport": "AMS",
+              "arrDate": "20211121",
+              "arrTime": "18:55",
+              "arrAirport": "RAK",
+              "flightNo": "HV5753",
+              "carrier": "HV"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "AMS",
+          "carrier": "KL",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "18:10",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "19:50",
+              "arrAirport": "AMS",
+              "flightNo": "KL1170",
+              "carrier": "KL"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "AMS",
+          "arrAirport": "RAK",
+          "carrier": "HV",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:10",
+              "depAirport": "AMS",
+              "arrDate": "20211121",
+              "arrTime": "18:55",
+              "arrAirport": "RAK",
+              "flightNo": "HV5753",
+              "carrier": "HV"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "RAK",
+          "arrAirport": "BER",
+          "carrier": "U2",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 1006.2160508946146,
+          "tax": 253.78493332938686,
+          "totalPrice": 1260.0009842240015,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:05",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "20:05",
+              "arrAirport": "BCN",
+              "flightNo": "AY1653",
+              "carrier": "AY"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "18:25",
+              "depAirport": "BCN",
+              "arrDate": "20211121",
+              "arrTime": "19:50",
+              "arrAirport": "RAK",
+              "flightNo": "FR2243",
+              "carrier": "FR"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "BCN",
+          "carrier": "AY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:05",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "20:05",
+              "arrAirport": "BCN",
+              "flightNo": "AY1653",
+              "carrier": "AY"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "BCN",
+          "arrAirport": "RAK",
+          "carrier": "FR",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "18:25",
+              "depAirport": "BCN",
+              "arrDate": "20211121",
+              "arrTime": "19:50",
+              "arrAirport": "RAK",
+              "flightNo": "FR2243",
+              "carrier": "FR"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "RAK",
+          "arrAirport": "BER",
+          "carrier": "U2",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 868.7045767415016,
+          "tax": 195.86,
+          "totalPrice": 1064.5645767415017,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:05",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "20:05",
+              "arrAirport": "BCN",
+              "flightNo": "AY1653",
+              "carrier": "AY"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "18:25",
+              "depAirport": "BCN",
+              "arrDate": "20211121",
+              "arrTime": "20:50",
+              "arrAirport": "RAK",
+              "flightNo": "VY7332",
+              "carrier": "VY"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "BCN",
+          "carrier": "AY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "17:05",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "20:05",
+              "arrAirport": "BCN",
+              "flightNo": "AY1653",
+              "carrier": "AY"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "BCN",
+          "arrAirport": "RAK",
+          "carrier": "VY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "18:25",
+              "depAirport": "BCN",
+              "arrDate": "20211121",
+              "arrTime": "20:50",
+              "arrAirport": "RAK",
+              "flightNo": "VY7332",
+              "carrier": "VY"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "RAK",
+          "arrAirport": "BER",
+          "carrier": "U2",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 886.0559603972118,
+          "tax": 195.86,
+          "totalPrice": 1081.9159603972118,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "21:25",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "22:15",
+              "arrAirport": "STN",
+              "flightNo": "FR9353",
+              "carrier": "FR"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:35",
+              "depAirport": "STN",
+              "arrDate": "20211121",
+              "arrTime": "19:05",
+              "arrAirport": "RAK",
+              "flightNo": "RK3556",
+              "carrier": "RK"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:50",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:50",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "STN",
+          "carrier": "FR",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "21:25",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "22:15",
+              "arrAirport": "STN",
+              "flightNo": "FR9353",
+              "carrier": "FR"
+            }
+          ]
+        },
+        {
+          "depDate": "20211121",
+          "depAirport": "STN",
+          "arrAirport": "RAK",
+          "carrier": "RK",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211121",
+              "depTime": "15:35",
+              "depAirport": "STN",
+              "arrDate": "20211121",
+              "arrTime": "19:05",
+              "arrAirport": "RAK",
+              "flightNo": "RK3556",
+              "carrier": "RK"
+            }
+          ]
+        },
+        {
+          "depDate": "20211122",
+          "depAirport": "RAK",
+          "arrAirport": "BER",
+          "carrier": "U2",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211122",
+              "depTime": "16:30",
+              "depAirport": "RAK",
+              "arrDate": "20211122",
+              "arrTime": "21:00",
+              "arrAirport": "BER",
+              "flightNo": "U25946",
+              "carrier": "U2"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 782.965018425064,
+          "tax": 177.9,
+          "totalPrice": 960.865018425064,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    },
+    {
+      "flights": [
+        {
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:20",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:20",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            },
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "07:20",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "08:20",
+              "arrAirport": "BER",
+              "flightNo": "AY1431",
+              "carrier": "AY"
+            }
+          ]
+        }
+      ],
+      "segmentGroups": [
+        {
+          "depDate": "20211120",
+          "depAirport": "PVG",
+          "arrAirport": "HEL",
+          "carrier": "HO",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "01:20",
+              "depAirport": "PVG",
+              "arrDate": "20211120",
+              "arrTime": "05:20",
+              "arrAirport": "HEL",
+              "flightNo": "HO1607",
+              "carrier": "HO"
+            }
+          ]
+        },
+        {
+          "depDate": "20211120",
+          "depAirport": "HEL",
+          "arrAirport": "BER",
+          "carrier": "AY",
+          "retDate": null,
+          "type": "OW",
+          "segments": [
+            {
+              "fareClass": "Economy",
+              "depDate": "20211120",
+              "depTime": "07:20",
+              "depAirport": "HEL",
+              "arrDate": "20211120",
+              "arrTime": "08:20",
+              "arrAirport": "BER",
+              "flightNo": "AY1431",
+              "carrier": "AY"
+            }
+          ]
+        }
+      ],
+      "prices": {
+        "ADT": {
+          "price": 817.52,
+          "tax": 196.49,
+          "totalPrice": 1014.01,
+          "seatsStatus": "EMPTY",
+          "currencyCode": "USD"
+        }
+      }
+    }
+  ],
+  "message": "Success"
+}
