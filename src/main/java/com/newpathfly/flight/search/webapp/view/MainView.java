@@ -17,10 +17,12 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.PWA;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Push
+@PWA(name = "TicketCombine Flight Search", shortName = "Flight Search", description = "TicketCombine Flight Search with Virtual Interlining technology", enableInstallPrompt = true)
 @Route(value = "")
 public class MainView extends VerticalLayout {
 
