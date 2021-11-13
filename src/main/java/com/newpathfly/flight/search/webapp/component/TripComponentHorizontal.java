@@ -22,7 +22,7 @@ public class TripComponentHorizontal extends HorizontalLayout {
             Scroller scroller = new Scroller();
             scroller.setScrollDirection(ScrollDirection.HORIZONTAL);
             scroller.setContent(flightComponentHorizontal);
-            scroller.setWidth("1280px");
+            scroller.setWidth("720px");
 
             add(scroller);
         });

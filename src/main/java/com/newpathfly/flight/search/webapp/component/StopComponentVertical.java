@@ -9,10 +9,10 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class StopComponent extends VerticalLayout {
+public class StopComponentVertical extends VerticalLayout {
     private final transient Stop _stop;
 
-    public StopComponent(Stop stop) {
+    public StopComponentVertical(Stop stop) {
         _stop = stop;
 
         String arrDateTime = null;

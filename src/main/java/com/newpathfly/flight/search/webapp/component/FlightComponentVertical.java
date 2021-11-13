@@ -23,11 +23,11 @@ public class FlightComponentVertical extends VerticalLayout {
         List<Stop> stops = buildStops();
 
         for (int i = 0; i < stops.size() - 1; i++) {
-            add(new StopComponent(stops.get(i)));
-            add(new SegmentComponent(_flight.getSegments().get(i)));
+            add(new StopComponentVertical(stops.get(i)));
+            add(new SegmentComponentVertical(_flight.getSegments().get(i)));
         }
 
-        add(new StopComponent(stops.get(stops.size() - 1)));
+        add(new StopComponentVertical(stops.get(stops.size() - 1)));
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);

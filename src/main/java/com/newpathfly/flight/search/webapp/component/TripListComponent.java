@@ -12,6 +12,9 @@ public class TripListComponent extends VerticalLayout {
 
     public TripListComponent() {
         _tripComponents = new ArrayList<>();
+
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
     }
 
     public void add(Trip trip) {

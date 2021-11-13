@@ -1,24 +1,25 @@
 package com.newpathfly.flight.search.webapp.component;
 
 import com.newpathfly.model.Segment;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class SegmentComponent extends HorizontalLayout {
-    
+public class SegmentComponentHorizontal extends VerticalLayout {
     private final Segment _segment;
 
-    public SegmentComponent(Segment segment) {
+    public SegmentComponentHorizontal(Segment segment) {
         _segment = segment;
 
         // construct
         add(getTextDiv(""));
-        add(VaadinIcon.LINE_V.create());
+        add(VaadinIcon.LINE_H.create());
         add(getTextDiv(segment.getFlightNo()));
 
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
+        setPadding(false);
+        setWidth("60px");
     }
 
     public Segment getSegment() {
@@ -30,7 +31,8 @@ public class SegmentComponent extends HorizontalLayout {
         div.setText(text);
         div.getStyle().set("padding", "0px");
         div.getStyle().set("margin", "0px");
-        div.setWidth("80px");
+        div.getStyle().set("text-align", "center");
+        div.getStyle().set("justify-content", "center");
         return div;
     }
 }
