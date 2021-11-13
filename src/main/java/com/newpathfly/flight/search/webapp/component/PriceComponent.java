@@ -25,7 +25,7 @@ public class PriceComponent extends FormLayout {
 
         // binding
         _binder.forField(_totalPriceTextField) //
-                .bind(p -> String.format("%s %s", p.getCurrencyCode(), p.getTotalPrice()), null);
+                .bind(p -> String.format("%s %.2f", p.getCurrencyCode(), p.getTotalPrice()), null);
 
         _binder.readBean(price);
     }

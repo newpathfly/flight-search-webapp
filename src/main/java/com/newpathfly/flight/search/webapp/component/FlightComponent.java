@@ -7,7 +7,6 @@ import java.util.List;
 import com.newpathfly.flight.search.webapp.model.Stop;
 import com.newpathfly.model.Flight;
 import com.newpathfly.model.Segment;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class FlightComponent extends VerticalLayout {
@@ -20,20 +19,15 @@ public class FlightComponent extends VerticalLayout {
         _flight = flight;
 
         // construct
-
-        add(VaadinIcon.FLIGHT_TAKEOFF.create());
         
         List<Stop> stops = buildStops();
 
         for (int i = 0; i < stops.size() - 1; i++) {
             add(new StopComponent(stops.get(i)));
-            add(VaadinIcon.LINE_V.create());
+            add(new SegmentComponent(_flight.getSegments().get(i)));
         }
 
         add(new StopComponent(stops.get(stops.size() - 1)));
-
-        add(VaadinIcon.FLIGHT_LANDING.create());
-
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
