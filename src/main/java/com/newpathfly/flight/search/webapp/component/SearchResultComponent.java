@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SearchResultComponent extends VerticalLayout {
 
+    private static final int MAX_POLL_OFFSET = 100;
+
     // Logic
     private final transient ShoppingApi _shoppingApi;
 
@@ -62,6 +64,10 @@ public class SearchResultComponent extends VerticalLayout {
 
                         if (HttpStatus.PARTIAL_CONTENT.equals(r.getStatusCode())) {
                             int offset = _tripListComponent.getTripComponents().size();
+
+                            if (offset >= MAX_POLL_OFFSET) {
+                                return;
+                            }
 
                             fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, String.format(
                                     "Partial content received - continue polling per 3 seconds. (RequestId: `%s`, Offset: `%s`)",

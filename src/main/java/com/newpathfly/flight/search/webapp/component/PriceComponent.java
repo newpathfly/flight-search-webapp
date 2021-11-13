@@ -13,7 +13,13 @@ public class PriceComponent extends FormLayout {
         _price = price;
 
         // construct
-        Div priceDiv = getTextDiv(String.format("%s %.2f", _price.getCurrencyCode(), _price.getTotalPrice()));
+        Div priceDiv;
+        if(null == _price) {
+            priceDiv = getTextDiv("ERROR");
+        } else {
+            priceDiv = getTextDiv(String.format("%s %.2f", _price.getCurrencyCode(), _price.getTotalPrice()));
+        }
+
         add(priceDiv);
     }
 
