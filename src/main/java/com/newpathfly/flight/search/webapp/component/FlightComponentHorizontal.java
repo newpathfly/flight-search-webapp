@@ -7,14 +7,12 @@ import java.util.List;
 import com.newpathfly.flight.search.webapp.model.Stop;
 import com.newpathfly.model.Flight;
 import com.newpathfly.model.Segment;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
-public class FlightComponent extends VerticalLayout {
-
-
+public class FlightComponentHorizontal extends HorizontalLayout {
     private final Flight _flight;
 
-    public FlightComponent(Flight flight) {
+    public FlightComponentHorizontal(Flight flight) {
         // initialize
         _flight = flight;
 

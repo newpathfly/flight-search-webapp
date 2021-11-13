@@ -8,14 +8,14 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class TripListComponent extends VerticalLayout {
 
-    private final List<TripComponent> _tripComponents;
+    private final List<TripComponentHorizontal> _tripComponents;
 
     public TripListComponent() {
         _tripComponents = new ArrayList<>();
     }
 
     public void add(Trip trip) {
-        TripComponent tripComponent = new TripComponent(trip);
+        TripComponentHorizontal tripComponent = new TripComponentHorizontal(trip);
 
         _tripComponents.add(tripComponent);
 
@@ -25,11 +25,11 @@ public class TripListComponent extends VerticalLayout {
     }
 
     public void clear() {
-        remove(_tripComponents.toArray(new TripComponent[0]));
+        remove(_tripComponents.toArray(new TripComponentHorizontal[0]));
         _tripComponents.clear();
     }
 
-    public List<TripComponent> getTripComponents() {
+    public List<TripComponentHorizontal> getTripComponents() {
         return _tripComponents;
     }
 }
