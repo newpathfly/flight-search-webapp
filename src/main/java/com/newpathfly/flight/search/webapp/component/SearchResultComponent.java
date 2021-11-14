@@ -27,6 +27,7 @@ public class SearchResultComponent extends VerticalLayout {
     private String _currentRequestId;
 
     // UI
+    private final SortControlComponent _sortControlComponent;
     private final TripListComponent _tripListComponent;
     private final UI _currentUI;
 
@@ -35,13 +36,13 @@ public class SearchResultComponent extends VerticalLayout {
         _shoppingApi = shoppingApi;
 
         // constructors
+        _sortControlComponent = new SortControlComponent();
         _tripListComponent = new TripListComponent();
         _currentUI = UI.getCurrent();
 
         // event listeners
         _currentUI.getSession().getAttribute(CancelPollingEventRegistry.class).register(e -> {
-            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
-                    "Search polling is getting cancelled."));
+            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, "Search polling is getting cancelled."));
 
             _currentRequestId = null;
         });
@@ -96,10 +97,13 @@ public class SearchResultComponent extends VerticalLayout {
         // misc settings
 
         add( //
+                _sortControlComponent, //
                 _tripListComponent //
         );
 
         setSpacing(false);
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
     }
 
     public void setCurrentRequestId(String currentRequestId) {

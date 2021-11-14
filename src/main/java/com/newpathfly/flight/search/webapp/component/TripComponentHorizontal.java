@@ -32,11 +32,6 @@ public class TripComponentHorizontal extends HorizontalLayout {
         add(new PriceComponent(_trip.getPrices().getADT()));
 
         setClassName("trip-component");
-        getStyle().set("border-width", "1px");
-        getStyle().set("border-color", "#AAAAAA");
-        getStyle().set("border-top-style", "dotted");
-        getStyle().set("border-bottom-style", "dotted");
-
         setMargin(true);
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);

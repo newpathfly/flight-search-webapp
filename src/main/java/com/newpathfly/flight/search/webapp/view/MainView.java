@@ -3,7 +3,7 @@ package com.newpathfly.flight.search.webapp.view;
 import com.newpathfly.api.ShoppingApi;
 import com.newpathfly.flight.search.webapp.component.LogNotification;
 import com.newpathfly.flight.search.webapp.component.SearchButton;
-import com.newpathfly.flight.search.webapp.component.SearchRequestComponent;
+import com.newpathfly.flight.search.webapp.component.SearchRequestCustomField;
 import com.newpathfly.flight.search.webapp.component.SearchResultComponent;
 import com.newpathfly.flight.search.webapp.event.CancelPollingEvent;
 import com.newpathfly.flight.search.webapp.event.LogEvent;
@@ -22,7 +22,7 @@ import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Push
-@PWA(name = "TicketCombine Flight Search", shortName = "Flight Search", description = "TicketCombine Flight Search with Virtual Interlining technology", enableInstallPrompt = true)
+@PWA(name = "TicketCombine Flight Search", shortName = "Flight Search", description = "TicketCombine Flight Search with Virtual Interlining technology")
 @Route(value = "")
 public class MainView extends VerticalLayout {
 
@@ -30,7 +30,7 @@ public class MainView extends VerticalLayout {
     private final transient ShoppingApi _shoppingApi;
 
     // UI
-    private final SearchRequestComponent _searchComponent;
+    private final SearchRequestCustomField _searchComponent;
     private final SearchButton _searchButton;
     private final SearchResultComponent _searchResultComponent;
 
@@ -41,7 +41,7 @@ public class MainView extends VerticalLayout {
         _shoppingApi = shoppingApi;
 
         // constructors
-        _searchComponent = new SearchRequestComponent();
+        _searchComponent = new SearchRequestCustomField();
         _searchButton = new SearchButton();
         _searchResultComponent = new SearchResultComponent(shoppingApi);
         _currentUI = UI.getCurrent();

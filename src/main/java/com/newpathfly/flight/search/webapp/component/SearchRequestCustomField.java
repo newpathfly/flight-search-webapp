@@ -19,7 +19,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 
-public class SearchRequestComponent extends CustomField<SearchRequest> {
+public class SearchRequestCustomField extends CustomField<SearchRequest> {
 
     public static final DateTimeFormatter DATE_FORMAT_YYYYMMDD = DateTimeFormatter.ofPattern("uuuuMMdd")
             .withResolverStyle(ResolverStyle.STRICT);
@@ -32,7 +32,7 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
     private final DatePicker _depDatePicker;
     private final DatePicker _retDatePicker;
 
-    public SearchRequestComponent() {
+    public SearchRequestCustomField() {
         // create components
         _tripTypeRadioButtonGroup = buildTripTypeRadioButtonGroup();
 
