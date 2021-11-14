@@ -20,6 +20,7 @@ public class SegmentComponentHorizontal extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setPadding(false);
         setWidth("60px");
+        setSpacing(false);
     }
 
     public Segment getSegment() {

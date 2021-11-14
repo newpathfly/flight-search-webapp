@@ -18,11 +18,14 @@ public class TripComponentHorizontal extends HorizontalLayout {
 
         // construct
         Flight depFlight = _trip.getFlights().get(0);
-        add(getFlightScroller(depFlight, VaadinIcon.ARROW_CIRCLE_RIGHT));
+        add(VaadinIcon.ARROW_CIRCLE_RIGHT.create());
+        add(getFlightScroller(depFlight));
 
         if (_trip.getFlights().size() > 1) {
+            // add the return flight
             Flight retFlight = _trip.getFlights().get(1);
-            add(getFlightScroller(retFlight, VaadinIcon.ARROW_CIRCLE_LEFT));
+            add(VaadinIcon.ARROW_CIRCLE_LEFT.create());
+            add(getFlightScroller(retFlight));
         }
 
         add(new PriceComponent(_trip.getPrices().getADT()));
@@ -34,16 +37,19 @@ public class TripComponentHorizontal extends HorizontalLayout {
         getStyle().set("border-bottom-style", "dotted");
 
         setMargin(true);
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
-    private static Scroller getFlightScroller(Flight flight, VaadinIcon icon) {
-        FlightComponentHorizontal flightComponentHorizontal = new FlightComponentHorizontal(flight, icon);
+    private static Scroller getFlightScroller(Flight flight) {
+        FlightComponentHorizontal flightComponentHorizontal = new FlightComponentHorizontal(flight);
         flightComponentHorizontal.getStyle().set("display", "inline-flex");
 
         Scroller scroller = new Scroller();
         scroller.setScrollDirection(ScrollDirection.HORIZONTAL);
         scroller.setContent(flightComponentHorizontal);
         scroller.setWidth("800px");
+        scroller.getStyle().set("overflow-x", "overlay");
 
         return scroller;
     }

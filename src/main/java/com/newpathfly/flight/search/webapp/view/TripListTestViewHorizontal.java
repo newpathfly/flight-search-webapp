@@ -34,6 +34,8 @@ public class TripListTestViewHorizontal extends VerticalLayout {
         buildTripList().forEach(t -> {
             _tripListComponent.add(new TripComponentHorizontal(t));
         });
+
+        setSpacing(false);
     }
 
     @SneakyThrows

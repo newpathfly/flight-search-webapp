@@ -1,10 +1,10 @@
 package com.newpathfly.flight.search.webapp.component;
 
 import com.newpathfly.model.Price;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class PriceComponent extends FormLayout {
+public class PriceComponent extends VerticalLayout {
 
     private final Price _price;
 
@@ -17,10 +17,13 @@ public class PriceComponent extends FormLayout {
         if(null == _price) {
             priceDiv = getTextDiv("ERROR");
         } else {
-            priceDiv = getTextDiv(String.format("%s %.2f", _price.getCurrencyCode(), _price.getTotalPrice()));
+            priceDiv = getTextDiv(String.format("%.2f %s", _price.getTotalPrice(), _price.getCurrencyCode()));
         }
 
         add(priceDiv);
+        setWidth("100px");
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
     public Price getPrice() {

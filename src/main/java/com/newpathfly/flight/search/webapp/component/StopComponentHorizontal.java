@@ -48,6 +48,7 @@ public class StopComponentHorizontal extends HorizontalLayout {
         // settings
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
+        setSpacing(false);
     }
 
     public Stop getStop() {
@@ -88,7 +89,6 @@ public class StopComponentHorizontal extends HorizontalLayout {
         verticalLayout.add(getTextDiv(dateTime.format(DateUtils.OUTPUT_TIME_FORMATTER)));
         verticalLayout.setAlignItems(Alignment.CENTER);
         verticalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        verticalLayout.setPadding(false);
         verticalLayout.setMargin(false);
 
         add(verticalLayout);

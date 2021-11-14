@@ -19,6 +19,7 @@ public class SegmentComponentVertical extends HorizontalLayout {
 
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
+        setSpacing(false);
     }
 
     public Segment getSegment() {

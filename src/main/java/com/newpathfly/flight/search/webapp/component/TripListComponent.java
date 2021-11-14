@@ -15,6 +15,7 @@ public class TripListComponent extends VerticalLayout {
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
+        setSpacing(false);
     }
 
     public void add(Trip trip) {

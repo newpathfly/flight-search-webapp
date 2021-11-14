@@ -98,6 +98,8 @@ public class SearchResultComponent extends VerticalLayout {
         add( //
                 _tripListComponent //
         );
+
+        setSpacing(false);
     }
 
     public void setCurrentRequestId(String currentRequestId) {

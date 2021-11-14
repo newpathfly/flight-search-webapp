@@ -7,20 +7,16 @@ import java.util.List;
 import com.newpathfly.flight.search.webapp.model.Stop;
 import com.newpathfly.model.Flight;
 import com.newpathfly.model.Segment;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 public class FlightComponentHorizontal extends HorizontalLayout {
     private final Flight _flight;
 
-    public FlightComponentHorizontal(Flight flight, VaadinIcon icon) {
+    public FlightComponentHorizontal(Flight flight) {
         // initialize
         _flight = flight;
 
         // construct
-        
-        add(icon.create());
-
         List<Stop> stops = buildStops();
 
         for (int i = 0; i < stops.size() - 1; i++) {
@@ -33,6 +29,7 @@ public class FlightComponentHorizontal extends HorizontalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         setHeight("90px");
+        setSpacing(false);
     }
 
     public Flight getFlight() {
