@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 import com.newpathfly.flight.search.webapp.model.Stop;
 import com.newpathfly.flight.search.webapp.util.DateUtils;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -72,7 +73,7 @@ public class StopComponentHorizontal extends HorizontalLayout {
 
     private VerticalLayout getStopLayout(String airport) {
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.add(getTextDiv(""), getTextDiv(airport, "bold"), getTextDiv(getDuration()));
+        verticalLayout.add(getTextDiv(""), getAirportAnchor(airport), getTextDiv(getDuration()));
         verticalLayout.setAlignItems(Alignment.CENTER);
         verticalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         verticalLayout.setClassName("stop-layout");
@@ -96,18 +97,6 @@ public class StopComponentHorizontal extends HorizontalLayout {
         return verticalLayout;
     }
 
-    private static Div getTextDiv(String text, String fontWeight) {
-        Div div = new Div();
-        div.setText(text);
-        div.getStyle().set("padding", "0px");
-        div.getStyle().set("margin", "0px");
-        div.getStyle().set("font-weight", fontWeight);
-        div.getStyle().set("font-size", "large");
-        div.getStyle().set("text-align", "center");
-        div.getStyle().set("justify-content", "center");
-        return div;
-    }
-
     private static Div getTextDiv(String text) {
         Div div = new Div();
         div.setText(text);
@@ -118,5 +107,21 @@ public class StopComponentHorizontal extends HorizontalLayout {
         div.getStyle().set("font-size", "small");
         div.setHeight("20px");
         return div;
+    }
+
+    private static Anchor getAirportAnchor(String airport) {
+        Anchor anchor = new Anchor(
+                String.format("https://www.flightstats.com/v2/airport-conditions/%s", airport.toLowerCase()), airport);
+        anchor.setTarget("_blank");
+
+        anchor.getStyle().set("padding", "0px");
+        anchor.getStyle().set("margin", "0px");
+        anchor.getStyle().set("font-weight", "bold");
+        anchor.getStyle().set("font-size", "large");
+        anchor.getStyle().set("text-align", "center");
+        anchor.getStyle().set("text-decoration", "none");
+        anchor.getStyle().set("justify-content", "center");
+        
+        return anchor;
     }
 }

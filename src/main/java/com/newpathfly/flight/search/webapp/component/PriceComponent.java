@@ -37,7 +37,8 @@ public class PriceComponent extends VerticalLayout {
         div.getStyle().set("margin", "0px");
         div.getStyle().set("text-align", "center");
         div.getStyle().set("justify-content", "center");
-        div.getStyle().set("font-size", "x-large");
+        div.getStyle().set("font-size", "large");
+
         div.setHeight("20px");
         return div;
     }
