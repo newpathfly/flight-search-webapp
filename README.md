@@ -15,3 +15,9 @@ NEWPATHFLY_API_BASE_URL| base URL override for the API. | the URL provided in th
     ```
 
 2. Open the browser to <http://localhost:8080/>
+
+## Heroku
+
+```shell
+mvn clean heroku:deploy -P production
+```
