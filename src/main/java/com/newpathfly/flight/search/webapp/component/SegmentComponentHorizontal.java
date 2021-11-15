@@ -28,7 +28,7 @@ public class SegmentComponentHorizontal extends VerticalLayout {
 
     private static Image getCarrierLogo(String carrierCode) {
         Image image = new Image(
-                String.format("http://athena.newpathfly.com/images/airline_logos/%s.png", carrierCode.toLowerCase()),
+                String.format("airline_logos/%s.png", carrierCode.toLowerCase()),
                 carrierCode);
 
         image.setWidth("26px");
