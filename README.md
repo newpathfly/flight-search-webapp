@@ -14,4 +14,4 @@ NEWPATHFLY_API_BASE_URL| base URL override for the API. | the URL provided in th
     java -jar /home/tigerinus/dev/newpathfly/flight-search-webapp/target/flight-search-webapp-<version>.jar
     ```
 
-2. Open the browser to http://localhost:8080/
+2. Open the browser to <http://localhost:8080/>
