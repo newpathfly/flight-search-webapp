@@ -46,6 +46,10 @@ public class SearchRequestCustomField extends CustomField<SearchRequest> {
 
         _depDatePicker.addValueChangeListener(e -> {
             // whenever departure date changes, update minimum return date
+            if (null == e.getValue()) {
+                return;
+            }
+
             if (_retDatePicker.getValue().isBefore(e.getValue().plusDays(1))) {
                 _retDatePicker.clear();
             }
