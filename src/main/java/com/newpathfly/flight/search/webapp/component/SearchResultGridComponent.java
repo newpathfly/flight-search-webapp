@@ -1,10 +1,16 @@
 package com.newpathfly.flight.search.webapp.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.newpathfly.model.Trip;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 
 public class SearchResultGridComponent extends VerticalLayout {
+
+    private final List<Trip> _trips;
 
     // UI
     private final RadioButtonGroup<String> _sortControl;
@@ -12,13 +18,15 @@ public class SearchResultGridComponent extends VerticalLayout {
 
     public SearchResultGridComponent() {
 
+        _trips = new ArrayList<>();
+
         // constructors
         _sortControl = getSortControl();
         HorizontalLayout sortControlLayout = new HorizontalLayout(_sortControl);
         sortControlLayout.setJustifyContentMode(JustifyContentMode.END);
         sortControlLayout.setWidthFull();
 
-        _tripGridComponent = new TripGridComponent();
+        _tripGridComponent = new TripGridComponent(_trips);
 
         // misc settings
 
@@ -41,8 +49,14 @@ public class SearchResultGridComponent extends VerticalLayout {
         return _tripGridComponent;
     }
 
+    public void add(Trip trip) {
+        _trips.add(trip);
+        _tripGridComponent.refresh();
+    }
+
     public void clear() {
-        _tripGridComponent.clear();
+        _trips.clear();
+        _tripGridComponent.refresh();
     }
 
     private static RadioButtonGroup<String> getSortControl() {

@@ -1,6 +1,5 @@
 package com.newpathfly.flight.search.webapp.component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.newpathfly.model.Trip;
@@ -9,14 +8,11 @@ import com.vaadin.flow.data.provider.DataProvider;
 
 public class TripGridComponent extends Grid<Trip> {
 
-    private final List<Trip> _trips;
     private final DataProvider<Trip, ?> _dataProvider;
 
-    public TripGridComponent() {
+    public TripGridComponent(List<Trip> trips) {
 
-        _trips = new ArrayList<>();
-
-        setItems(_trips);
+        setItems(trips);
 
         _dataProvider = getDataProvider();
 
@@ -29,17 +25,7 @@ public class TripGridComponent extends Grid<Trip> {
         getStyle().set("border-style", "none");
     }
 
-    public void add(Trip trip) {
-        _trips.add(trip);
+    public void refresh() {
         _dataProvider.refreshAll();
-    }
-
-    public void clear() {
-        _trips.clear();
-        _dataProvider.refreshAll();
-    }
-    
-    public List<Trip> getTrips() {
-        return _trips;
     }
 }
