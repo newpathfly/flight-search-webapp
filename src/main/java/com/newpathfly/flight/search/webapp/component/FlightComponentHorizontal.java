@@ -20,11 +20,11 @@ public class FlightComponentHorizontal extends HorizontalLayout {
         List<Stop> stops = buildStops();
 
         for (int i = 0; i < stops.size() - 1; i++) {
-            add(new StopComponentHorizontal(stops.get(i)));
-            add(new SegmentComponentHorizontal(_flight.getSegments().get(i)));
+            add(new StopComponent(stops.get(i)));
+            add(new SegmentComponent(_flight.getSegments().get(i)));
         }
 
-        add(new StopComponentHorizontal(stops.get(stops.size() - 1)));
+        add(new StopComponent(stops.get(stops.size() - 1)));
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);

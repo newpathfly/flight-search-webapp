@@ -5,10 +5,10 @@ import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class SegmentComponentHorizontal extends VerticalLayout {
+public class SegmentComponent extends VerticalLayout {
     private final Segment _segment;
 
-    public SegmentComponentHorizontal(Segment segment) {
+    public SegmentComponent(Segment segment) {
         _segment = segment;
 
         // construct

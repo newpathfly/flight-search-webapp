@@ -8,11 +8,11 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.Scroller.ScrollDirection;
 
-public class TripComponentHorizontal extends HorizontalLayout {
+public class TripComponent extends HorizontalLayout {
 
     private final Trip _trip;
 
-    public TripComponentHorizontal(Trip trip) {
+    public TripComponent(Trip trip) {
 
         // initialize
         _trip = trip;

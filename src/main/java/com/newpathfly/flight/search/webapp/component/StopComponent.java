@@ -10,10 +10,10 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class StopComponentHorizontal extends HorizontalLayout {
+public class StopComponent extends HorizontalLayout {
     private final transient Stop _stop;
 
-    public StopComponentHorizontal(Stop stop) {
+    public StopComponent(Stop stop) {
         _stop = stop;
 
         LocalDateTime arrDateTime = null;
