@@ -11,7 +11,9 @@ import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
 import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
+import com.newpathfly.model.PollResponse;
 import com.newpathfly.model.SearchRequest;
+import com.newpathfly.model.SearchResultPoll;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -20,11 +22,15 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 @Push
 @PWA(name = "TicketCombine Flight Search", shortName = "Flight Search", description = "TicketCombine Flight Search with Virtual Interlining technology", enableInstallPrompt = false)
 @Route(value = "")
 public class MainView extends VerticalLayout {
+    private static final int MAX_POLL_OFFSET = 100;
+
+    private String _currentRequestId;
 
     // Logic
     private final transient ShoppingApi _shoppingApi;
@@ -43,66 +49,70 @@ public class MainView extends VerticalLayout {
         // constructors
         _searchComponent = new SearchRequestCustomField();
         _searchButton = new SearchButton();
-        _searchResultComponent = new SearchResultComponent(shoppingApi);
+        _searchResultComponent = new SearchResultComponent();
         _currentUI = UI.getCurrent();
 
-        // UI listeners
-        _searchButton.addClickListener(e -> {
+        // UI Listeners
+        _searchButton.addClickListener(e -> searchButtonClickListener());
 
-            // validation
-            if (_searchComponent.getDepAirportTextField().getValue().isEmpty()) {
-                _searchComponent.getDepAirportTextField().focus();
-                return;
-            }
+        // Event Listeners
 
-            if (_searchComponent.getArrAirportTextField().getValue().isEmpty()) {
-                _searchComponent.getArrAirportTextField().focus();
-                return;
-            }
-
-            if (_searchComponent.getDepDatePicker().getValue() == null) {
-                _searchComponent.getDepDatePicker().focus();
-                return;
-            }
-
-            if (_searchComponent.getRetDatePicker().getValue() == null) {
-                _searchComponent.getRetDatePicker().focus();
-                return;
-            }
-
-            // cancel any existing polling
-            fire(new CancelPollingEvent());
-
-            _searchResultComponent.clear();
-
-            // obtain the search request
-            SearchRequest searchRequest = _searchComponent.getValue();
-
-            // proceed the search and subscribe to the response
-            _shoppingApi.createSearch(searchRequest).subscribe( //
-                    r -> {
-                        fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
-                                String.format("Search request sent successfuly. (RequestId: `%s`, Message: `%s`)",
-                                        r.getRequestId(), r.getMessage())));
-
-                        _searchResultComponent.setCurrentRequestId(r.getRequestId());
-
-                        try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException exception) {
-                            fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
-                            Thread.currentThread().interrupt();
-                        }
-
-                        fire(new SearchResultPollEvent());
-                    }, //
-                    exception -> fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage())) //
-            );
-        });
-
-        // event listeners
+        // log event for showing message as notifications in the UI
         _currentUI.getSession().getAttribute(LogEventRegistry.class).register(e -> {
             _currentUI.access(() -> LogNotification.send(e.getVariant(), e.getMessage()));
+        });
+
+        // cancellation event for cancelling the polling
+        _currentUI.getSession().getAttribute(CancelPollingEventRegistry.class).register(e -> {
+            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, "Search polling is getting cancelled."));
+            _currentRequestId = null;
+        });
+
+        // search result polling event for polling the search result from API
+        _currentUI.getSession().getAttribute(SearchResultPollEventRegistry.class).register(e -> {
+
+            if (null == _currentRequestId || _currentRequestId.isEmpty()) {
+                return;
+            }
+
+            SearchResultPoll searchResultPoll = new SearchResultPoll() //
+                    .requestId(_currentRequestId) //
+                    .offset(_searchResultComponent.getTripListComponent().getTripComponents().size()); //
+
+            _shoppingApi.createPollWithHttpInfo(searchResultPoll).subscribe( //
+                    r -> {
+                        PollResponse pollResponse = r.getBody();
+
+                        pollResponse.getTrips().forEach(_searchResultComponent.getTripListComponent()::add);
+
+                        if (HttpStatus.PARTIAL_CONTENT.equals(r.getStatusCode())) {
+                            int offset = _searchResultComponent.getTripListComponent().getTripComponents().size();
+
+                            if (offset >= MAX_POLL_OFFSET) {
+                                return;
+                            }
+
+                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, String.format(
+                                    "Partial content received - continue polling per 3 seconds. (RequestId: `%s`, Offset: `%s`)",
+                                    searchResultPoll.getRequestId(), offset)));
+
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException exception) {
+                                fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
+                                Thread.currentThread().interrupt();
+                            }
+
+                            fire(new SearchResultPollEvent());
+                        } else {
+                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
+                                    "Full content received - no more polling."));
+                        }
+                    }, //
+                    exception -> {
+                        fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
+                    } //
+            );
         });
 
         // misc settings
@@ -138,5 +148,58 @@ public class MainView extends VerticalLayout {
                 .access(() -> {
                     _currentUI.getSession().getAttribute(CancelPollingEventRegistry.class).sentEvent(e);
                 });
+    }
+
+    private void searchButtonClickListener() {
+
+        // validation
+        if (_searchComponent.getDepAirportTextField().getValue().isEmpty()) {
+            _searchComponent.getDepAirportTextField().focus();
+            return;
+        }
+
+        if (_searchComponent.getArrAirportTextField().getValue().isEmpty()) {
+            _searchComponent.getArrAirportTextField().focus();
+            return;
+        }
+
+        if (_searchComponent.getDepDatePicker().getValue() == null) {
+            _searchComponent.getDepDatePicker().focus();
+            return;
+        }
+
+        if (_searchComponent.getRetDatePicker().getValue() == null) {
+            _searchComponent.getRetDatePicker().focus();
+            return;
+        }
+
+        // cancel any existing polling
+        fire(new CancelPollingEvent());
+
+        _searchResultComponent.clear();
+
+        // obtain the search request
+        SearchRequest searchRequest = _searchComponent.getValue();
+
+        // proceed the search and subscribe to the response
+        _shoppingApi.createSearch(searchRequest).subscribe( //
+                r -> {
+                    fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
+                            String.format("Search request sent successfuly. (RequestId: `%s`, Message: `%s`)",
+                                    r.getRequestId(), r.getMessage())));
+
+                    _currentRequestId = r.getRequestId();
+
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException exception) {
+                        fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
+                        Thread.currentThread().interrupt();
+                    }
+
+                    fire(new SearchResultPollEvent());
+                }, //
+                exception -> fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage())) //
+        );
     }
 }

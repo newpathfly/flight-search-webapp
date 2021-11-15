@@ -8,7 +8,10 @@ public class SortControlComponent extends HorizontalLayout {
     private final RadioButtonGroup<String> _sortControl;
 
     public SortControlComponent() {
-        _sortControl = getSortControl();
+        _sortControl = new RadioButtonGroup<>();
+
+        _sortControl.setItems("# of stops", "price");
+        _sortControl.setLabel("Sort by");
 
         setWidth("956px");
         setJustifyContentMode(JustifyContentMode.END);
@@ -20,12 +23,7 @@ public class SortControlComponent extends HorizontalLayout {
         getStyle().set("border-top-style", "dotted");
     }
 
-    private static RadioButtonGroup<String> getSortControl() {
-        RadioButtonGroup<String> sortControl = new RadioButtonGroup<>();
-
-        sortControl.setItems("# of stops", "price");
-        sortControl.setLabel("Sort by");
-
-        return sortControl;
+    public RadioButtonGroup<String> getSortControl() {
+        return _sortControl;
     }
 }
