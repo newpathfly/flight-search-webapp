@@ -4,13 +4,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 
-public class SearchResultComponent extends VerticalLayout {
+public class SearchResultGridComponent extends VerticalLayout {
 
     // UI
     private final RadioButtonGroup<String> _sortControl;
-    private final TripListComponent _tripListComponent;
+    private final TripGridComponent _tripGridComponent;
 
-    public SearchResultComponent() {
+    public SearchResultGridComponent() {
 
         // constructors
         _sortControl = getSortControl();
@@ -18,13 +18,13 @@ public class SearchResultComponent extends VerticalLayout {
         sortControlLayout.setJustifyContentMode(JustifyContentMode.END);
         sortControlLayout.setWidthFull();
 
-        _tripListComponent = new TripListComponent();
+        _tripGridComponent = new TripGridComponent();
 
         // misc settings
 
         add( //
                 sortControlLayout, //
-                _tripListComponent //
+                _tripGridComponent //
         );
 
         setSpacing(false);
@@ -37,12 +37,12 @@ public class SearchResultComponent extends VerticalLayout {
         getStyle().set("border-top-style", "dotted");
     }
 
-    public TripListComponent getTripListComponent() {
-        return _tripListComponent;
+    public TripGridComponent getTripGridComponent() {
+        return _tripGridComponent;
     }
 
     public void clear() {
-        _tripListComponent.clear();
+        _tripGridComponent.clear();
     }
 
     private static RadioButtonGroup<String> getSortControl() {

@@ -20,11 +20,13 @@ public class TripGridComponent extends Grid<Trip> {
 
         _dataProvider = getDataProvider();
 
-        addComponentColumn(TripComponent::new);
-        addComponentColumn(t -> new PriceComponent(t.getPrices().getALL()));
+        addComponentColumn(TripComponent::new).setWidth("800px");
+        addComponentColumn(t -> new PriceComponent(t.getPrices().getADT()));
 
         setSelectionMode(SelectionMode.NONE);
-        setWidth("956px");
+        setAllRowsVisible(true);
+
+        getStyle().set("border-style", "none");
     }
 
     public void add(Trip trip) {

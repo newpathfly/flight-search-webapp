@@ -7,8 +7,9 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.Scroller.ScrollDirection;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class TripComponent extends HorizontalLayout {
+public class TripComponent extends VerticalLayout {
 
     private final Trip _trip;
 
@@ -19,22 +20,27 @@ public class TripComponent extends HorizontalLayout {
 
         // construct
         Flight depFlight = _trip.getFlights().get(0);
-        add(getFlightTypeIcon(false));
-        add(getFlightScroller(depFlight));
+        add(getFlightLayout(depFlight, false));
 
         if (_trip.getFlights().size() > 1) {
             // add the return flight
             Flight retFlight = _trip.getFlights().get(1);
-            add(getFlightTypeIcon(true));
-            add(getFlightScroller(retFlight));
+            add(getFlightLayout(retFlight, true));
         }
 
-        add(new PriceComponent(_trip.getPrices().getADT()));
-
-        setClassName("trip-component");
         setMargin(true);
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
+    }
+
+    private static HorizontalLayout getFlightLayout(Flight flight, boolean returnFlight) {
+        HorizontalLayout flightLayout = new HorizontalLayout();
+        flightLayout.add(getFlightTypeIcon(returnFlight));
+        flightLayout.add(getFlightScroller(flight));
+
+        flightLayout.setAlignItems(Alignment.CENTER);
+        flightLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        return flightLayout;
     }
 
     private static Scroller getFlightScroller(Flight flight) {
