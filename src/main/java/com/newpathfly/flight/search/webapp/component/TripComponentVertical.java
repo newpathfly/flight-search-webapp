@@ -17,5 +17,6 @@ public class TripComponentVertical extends HorizontalLayout {
             add(new FlightComponentVertical(f));
         });
         add(new PriceComponent(_trip.getPrices().getADT()));
+        setSpacing(false);
     }
 }

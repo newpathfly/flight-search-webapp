@@ -3,6 +3,7 @@ package com.newpathfly.flight.search.webapp.view;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.newpathfly.flight.search.webapp.component.SortControlComponent;
 import com.newpathfly.flight.search.webapp.component.TripComponentHorizontal;
 import com.newpathfly.flight.search.webapp.component.TripListComponent;
 import com.newpathfly.model.PollResponse;
@@ -19,21 +20,28 @@ import lombok.SneakyThrows;
 @Route(value = "/test2")
 public class TripListTestViewHorizontal extends VerticalLayout {
 
+    private final SortControlComponent _sortControlComponent;
     private final TripListComponent _tripListComponent;
 
     private final transient ResourceLoader _resourceLoader;
     private final transient ObjectMapper _objectMapper;
 
     public TripListTestViewHorizontal(@Autowired ResourceLoader resourceLoader) {
+        _sortControlComponent = new SortControlComponent();
         _tripListComponent = new TripListComponent();
         _resourceLoader = resourceLoader;
         _objectMapper = new ObjectMapper();
 
+        add(_sortControlComponent);
         add(_tripListComponent);
 
         buildTripList().forEach(t -> {
             _tripListComponent.add(new TripComponentHorizontal(t));
         });
+
+        setSpacing(false);
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
     }
 
     @SneakyThrows
