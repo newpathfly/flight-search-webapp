@@ -117,9 +117,6 @@
                         <version>3.0.4</version>
                         <configuration>
                             <appName>flight-search-webapp</appName>
-                            <configVars>
-                                <JAVA_OPTS>-Xmx512M -XX:+UseCompressedOops</JAVA_OPTS>
-                            </configVars>
                         </configuration>
                     </plugin>
                 </plugins>
