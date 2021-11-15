@@ -22,7 +22,7 @@ import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Push
-@PWA(name = "TicketCombine Flight Search", shortName = "Flight Search", description = "TicketCombine Flight Search with Virtual Interlining technology")
+@PWA(name = "TicketCombine Flight Search", shortName = "Flight Search", description = "TicketCombine Flight Search with Virtual Interlining technology", enableInstallPrompt = false)
 @Route(value = "")
 public class MainView extends VerticalLayout {
 

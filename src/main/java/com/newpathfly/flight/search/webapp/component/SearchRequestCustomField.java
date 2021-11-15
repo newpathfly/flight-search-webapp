@@ -17,6 +17,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.Autocapitalize;
 import com.vaadin.flow.component.textfield.TextField;
 
 public class SearchRequestCustomField extends CustomField<SearchRequest> {
@@ -152,6 +153,14 @@ public class SearchRequestCustomField extends CustomField<SearchRequest> {
         TextField textField = new TextField();
         textField.setLabel(label);
         textField.setPrefixComponent(icon.create());
+        textField.setAutocapitalize(Autocapitalize.CHARACTERS);
+        textField.setClearButtonVisible(true);
+        textField.setMaxLength(3);
+
+        textField.addBlurListener(e -> {
+            textField.setValue(textField.getValue().toUpperCase());
+        });
+
         return textField;
     }
 
