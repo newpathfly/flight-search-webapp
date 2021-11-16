@@ -1,7 +1,8 @@
 package com.newpathfly.flight.search.webapp.component;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import com.newpathfly.flight.search.webapp.model.SortTypeEnum;
 import com.newpathfly.model.Flight;
@@ -14,8 +15,9 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 
 public class SearchResultGridComponent extends VerticalLayout {
 
-    private final PriorityQueue<Trip> _tripsQueueByPrice;
-    private final PriorityQueue<Trip> _tripsQueueByStops;
+    private final List<Trip> _trips;
+    private final PriorityBlockingQueue<Trip> _tripsQueueByPrice;
+    private final PriorityBlockingQueue<Trip> _tripsQueueByStops;
 
     // UI
     private final RadioButtonGroup<SortTypeEnum> _sortControl;
@@ -23,8 +25,11 @@ public class SearchResultGridComponent extends VerticalLayout {
 
     public SearchResultGridComponent() {
 
-        _tripsQueueByPrice = new PriorityQueue<>((a, b) -> Double.compare(getTotalPrice(a), getTotalPrice(b)));
-        _tripsQueueByStops = new PriorityQueue<>((a, b) -> Integer.compare(getStopCount(a), getStopCount(b)));
+        _trips = new ArrayList<>();
+        _tripsQueueByPrice = new PriorityBlockingQueue<>(10,
+                (a, b) -> Double.compare(getTotalPrice(a), getTotalPrice(b)));
+        _tripsQueueByStops = new PriorityBlockingQueue<>(10,
+                (a, b) -> Integer.compare(getStopCount(a), getStopCount(b)));
 
         // constructors
         _sortControl = getSortControl();
@@ -33,10 +38,11 @@ public class SearchResultGridComponent extends VerticalLayout {
         sortControlLayout.setWidthFull();
 
         _tripGridComponent = new TripGridComponent();
-        switchSortType(_sortControl.getValue());
+        switchSortType(SortTypeEnum.NONE);
+        // switchSortType(_sortControl.getValue());
 
         // UI events
-        _sortControl.addValueChangeListener(e -> switchSortType(e.getValue()));
+        // _sortControl.addValueChangeListener(e -> switchSortType(e.getValue()));
 
         // misc settings
 
@@ -49,6 +55,7 @@ public class SearchResultGridComponent extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         setWidth("956px");
+        setHeight("100vh");
 
         getStyle().set("border-width", "1px");
         getStyle().set("border-color", "#AAAAAA");
@@ -59,22 +66,16 @@ public class SearchResultGridComponent extends VerticalLayout {
         return _tripGridComponent;
     }
 
-    public void add(Trip trip) {
-        _tripsQueueByPrice.add(trip);
-        _tripsQueueByStops.add(trip);
-
-        _tripGridComponent.refresh();
-    }
-
     public void add(List<Trip> trips) {
+        _trips.addAll(trips);
         _tripsQueueByPrice.addAll(trips);
         _tripsQueueByStops.addAll(trips);
 
         _tripGridComponent.refresh();
     }
 
-
     public void clear() {
+        _trips.clear();
         _tripsQueueByPrice.clear();
         _tripsQueueByStops.clear();
 
@@ -103,7 +104,7 @@ public class SearchResultGridComponent extends VerticalLayout {
             break;
 
         default:
-            // do nothing
+            _tripGridComponent.setItems(_trips);
         }
 
         _tripGridComponent.refresh();

@@ -202,11 +202,11 @@ public class MainView extends VerticalLayout {
             }
 
             fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, String.format(
-                    "Partial content received - continue polling per 3 seconds. (RequestId: `%s`, Offset: `%s`)",
+                    "Partial content received - continue polling per 5 seconds. (RequestId: `%s`, Offset: `%s`)",
                     _currentRequestId, offset)));
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException exception) {
                 fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
                 Thread.currentThread().interrupt();

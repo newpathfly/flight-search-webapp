@@ -10,7 +10,7 @@ public class TripGridComponent extends Grid<Trip> {
         addComponentColumn(t -> new PriceComponent(t.getPrices().getADT()));
 
         setSelectionMode(SelectionMode.NONE);
-        setAllRowsVisible(true);
+        setHeight("auto !important");
 
         getStyle().set("border-style", "none");
     }
