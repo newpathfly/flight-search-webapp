@@ -1,6 +1,6 @@
 package com.newpathfly.flight.search.webapp.component;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -11,11 +11,11 @@ import com.newpathfly.model.Trip;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.TextRenderer;
 
 public class SearchResultGridComponent extends VerticalLayout {
 
-    private final List<Trip> _trips;
     private final PriorityBlockingQueue<Trip> _tripsQueueByPrice;
     private final PriorityBlockingQueue<Trip> _tripsQueueByStops;
 
@@ -25,7 +25,6 @@ public class SearchResultGridComponent extends VerticalLayout {
 
     public SearchResultGridComponent() {
 
-        _trips = new ArrayList<>();
         _tripsQueueByPrice = new PriorityBlockingQueue<>(10,
                 (a, b) -> Double.compare(getTotalPrice(a), getTotalPrice(b)));
         _tripsQueueByStops = new PriorityBlockingQueue<>(10,
@@ -38,19 +37,17 @@ public class SearchResultGridComponent extends VerticalLayout {
         sortControlLayout.setWidthFull();
 
         _tripGridComponent = new TripGridComponent();
-        switchSortType(SortTypeEnum.NONE);
-        // switchSortType(_sortControl.getValue());
+        switchSortType(_sortControl.getValue());
 
         // UI events
-        // _sortControl.addValueChangeListener(e -> switchSortType(e.getValue()));
-
-        // misc settings
+        _sortControl.addValueChangeListener(e -> switchSortType(e.getValue()));
 
         add( //
                 sortControlLayout, //
                 _tripGridComponent //
         );
 
+        // misc settings
         setSpacing(false);
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
@@ -67,7 +64,6 @@ public class SearchResultGridComponent extends VerticalLayout {
     }
 
     public void add(List<Trip> trips) {
-        _trips.addAll(trips);
         _tripsQueueByPrice.addAll(trips);
         _tripsQueueByStops.addAll(trips);
 
@@ -75,7 +71,6 @@ public class SearchResultGridComponent extends VerticalLayout {
     }
 
     public void clear() {
-        _trips.clear();
         _tripsQueueByPrice.clear();
         _tripsQueueByStops.clear();
 
@@ -96,18 +91,32 @@ public class SearchResultGridComponent extends VerticalLayout {
     private void switchSortType(SortTypeEnum sortType) {
         switch (sortType) {
         case BY_PRICE:
-            _tripGridComponent.setItems(_tripsQueueByPrice);
+            setDataProvider(_tripsQueueByPrice);
             break;
 
         case BY_STOPS:
-            _tripGridComponent.setItems(_tripsQueueByStops);
+            setDataProvider(_tripsQueueByStops);
             break;
 
         default:
-            _tripGridComponent.setItems(_trips);
+            // do nothing
         }
 
         _tripGridComponent.refresh();
+    }
+
+    private void setDataProvider(Collection<Trip> trips) {
+        // lazy loading for performance
+        _tripGridComponent.setDataProvider(DataProvider.fromCallbacks( //
+                q -> {
+                    int offset = q.getOffset();
+                    int limit = q.getLimit();
+                    return trips.stream().skip(offset).limit(limit);
+                }, //
+                q -> {
+                    return trips.size();
+                } //
+        ));
     }
 
     private static RadioButtonGroup<SortTypeEnum> getSortControl() {

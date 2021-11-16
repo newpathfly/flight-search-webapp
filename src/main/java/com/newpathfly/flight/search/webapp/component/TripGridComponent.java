@@ -6,8 +6,8 @@ import com.vaadin.flow.component.grid.Grid;
 public class TripGridComponent extends Grid<Trip> {
 
     public TripGridComponent() {
-        addComponentColumn(TripComponent::new).setWidth("800px");
-        addComponentColumn(t -> new PriceComponent(t.getPrices().getADT()));
+        addComponentColumn(TripComponent::new).setWidth("800px").setKey("trip");
+        addComponentColumn(t -> new PriceComponent(t.getPrices().getADT())).setKey("price");
 
         setSelectionMode(SelectionMode.NONE);
         setHeight("auto !important");
