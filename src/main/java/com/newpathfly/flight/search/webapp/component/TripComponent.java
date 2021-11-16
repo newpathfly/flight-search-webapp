@@ -11,20 +11,15 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class TripComponent extends VerticalLayout {
 
-    private final Trip _trip;
-
     public TripComponent(Trip trip) {
 
-        // initialize
-        _trip = trip;
-
         // construct
-        Flight depFlight = _trip.getFlights().get(0);
+        Flight depFlight = trip.getFlights().get(0);
         add(getFlightLayout(depFlight, false));
 
-        if (_trip.getFlights().size() > 1) {
+        if (trip.getFlights().size() > 1) {
             // add the return flight
-            Flight retFlight = _trip.getFlights().get(1);
+            Flight retFlight = trip.getFlights().get(1);
             add(getFlightLayout(retFlight, true));
         }
 
