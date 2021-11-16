@@ -4,7 +4,7 @@ import com.newpathfly.api.ShoppingApi;
 import com.newpathfly.flight.search.webapp.component.LogNotification;
 import com.newpathfly.flight.search.webapp.component.SearchButton;
 import com.newpathfly.flight.search.webapp.component.SearchRequestCustomField;
-import com.newpathfly.flight.search.webapp.component.SearchResultComponent;
+import com.newpathfly.flight.search.webapp.component.SearchResultGridComponent;
 import com.newpathfly.flight.search.webapp.event.CancelPollingEvent;
 import com.newpathfly.flight.search.webapp.event.LogEvent;
 import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
@@ -23,10 +23,14 @@ import com.vaadin.flow.server.PWA;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Push
 @PWA(name = "TicketCombine Flight Search", shortName = "Flight Search", description = "TicketCombine Flight Search with Virtual Interlining technology", enableInstallPrompt = false)
 @Route(value = "")
+@Slf4j
 public class MainView extends VerticalLayout {
     private static final int MAX_POLL_OFFSET = 100;
 
@@ -38,7 +42,7 @@ public class MainView extends VerticalLayout {
     // UI
     private final SearchRequestCustomField _searchComponent;
     private final SearchButton _searchButton;
-    private final SearchResultComponent _searchResultComponent;
+    private final SearchResultGridComponent _searchResultGridComponent;
 
     private final UI _currentUI;
 
@@ -49,7 +53,7 @@ public class MainView extends VerticalLayout {
         // constructors
         _searchComponent = new SearchRequestCustomField();
         _searchButton = new SearchButton();
-        _searchResultComponent = new SearchResultComponent();
+        _searchResultGridComponent = new SearchResultGridComponent();
         _currentUI = UI.getCurrent();
 
         // UI Listeners
@@ -77,39 +81,12 @@ public class MainView extends VerticalLayout {
 
             SearchResultPoll searchResultPoll = new SearchResultPoll() //
                     .requestId(_currentRequestId) //
-                    .offset(_searchResultComponent.getTripListComponent().getTripComponents().size()); //
+                    .offset(_searchResultGridComponent.size()); //
 
             _shoppingApi.createPollWithHttpInfo(searchResultPoll).subscribe( //
-                    r -> {
-                        PollResponse pollResponse = r.getBody();
-
-                        pollResponse.getTrips().forEach(_searchResultComponent.getTripListComponent()::add);
-
-                        if (HttpStatus.PARTIAL_CONTENT.equals(r.getStatusCode())) {
-                            int offset = _searchResultComponent.getTripListComponent().getTripComponents().size();
-
-                            if (offset >= MAX_POLL_OFFSET) {
-                                return;
-                            }
-
-                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, String.format(
-                                    "Partial content received - continue polling per 3 seconds. (RequestId: `%s`, Offset: `%s`)",
-                                    searchResultPoll.getRequestId(), offset)));
-
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException exception) {
-                                fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
-                                Thread.currentThread().interrupt();
-                            }
-
-                            fire(new SearchResultPollEvent());
-                        } else {
-                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
-                                    "Full content received - no more polling."));
-                        }
-                    }, //
+                    this::handlePollResponseEntity, //
                     exception -> {
+                        log.error("error when handling poll response.", exception);
                         fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
                     } //
             );
@@ -123,7 +100,7 @@ public class MainView extends VerticalLayout {
         add( //
                 _searchComponent, //
                 _searchButton, //
-                _searchResultComponent //
+                _searchResultGridComponent //
         );
     }
 
@@ -176,7 +153,7 @@ public class MainView extends VerticalLayout {
         // cancel any existing polling
         fire(new CancelPollingEvent());
 
-        _searchResultComponent.clear();
+        _searchResultGridComponent.clear();
 
         // obtain the search request
         SearchRequest searchRequest = _searchComponent.getValue();
@@ -199,7 +176,45 @@ public class MainView extends VerticalLayout {
 
                     fire(new SearchResultPollEvent());
                 }, //
-                exception -> fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage())) //
+                exception -> {
+                    log.error("error when handling search response.", exception);
+                    fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
+                } //
         );
+    }
+
+    private void handlePollResponseEntity(ResponseEntity<PollResponse> r) {
+        PollResponse pollResponse = r.getBody();
+
+        if (null != pollResponse && !pollResponse.getTrips().isEmpty()) {
+            getUI().orElseThrow(
+                    () -> new RuntimeException("current compoent not attached to a UI - cannot add trips to grid"))
+                    .access(() -> {
+                        _searchResultGridComponent.add(pollResponse.getTrips());
+                    });
+        }
+
+        if (HttpStatus.PARTIAL_CONTENT.equals(r.getStatusCode())) {
+            int offset = _searchResultGridComponent.size();
+
+            if (offset >= MAX_POLL_OFFSET) {
+                return;
+            }
+
+            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, String.format(
+                    "Partial content received - continue polling per 3 seconds. (RequestId: `%s`, Offset: `%s`)",
+                    _currentRequestId, offset)));
+
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException exception) {
+                fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
+                Thread.currentThread().interrupt();
+            }
+
+            fire(new SearchResultPollEvent());
+        } else {
+            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, "Full content received - no more polling."));
+        }
     }
 }

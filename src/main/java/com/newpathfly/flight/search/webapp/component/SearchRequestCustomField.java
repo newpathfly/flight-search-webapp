@@ -182,6 +182,7 @@ public class SearchRequestCustomField extends CustomField<SearchRequest> {
         datePicker.setMax(LocalDate.now().plusDays(180));
         datePicker.setClearButtonVisible(true);
         datePicker.setWidth("152px");
+        datePicker.setAutoOpen(true);
         return datePicker;
     }
 

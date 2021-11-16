@@ -30,7 +30,7 @@ public class TripGridTestView extends VerticalLayout {
 
         add(_searchResultGridComponent);
 
-        buildTripList().forEach(_searchResultGridComponent::add);
+        _searchResultGridComponent.add(buildTripList());
 
         setSpacing(false);
         setJustifyContentMode(JustifyContentMode.CENTER);
