@@ -36,13 +36,13 @@ public class StopComponent extends HorizontalLayout {
 
         // construct
         if (null != arrDateTime) {
-            add(getDateTimeLayout(arrDateTime));
+            add(buildDateTimeLayout(arrDateTime));
         }
 
-        add(getStopLayout(airport));
+        add(buildStopLayout(airport));
 
         if (null != depDateTime) {
-            add(getDateTimeLayout(depDateTime));
+            add(buildDateTimeLayout(depDateTime));
 
         }
 
@@ -71,9 +71,9 @@ public class StopComponent extends HorizontalLayout {
         return String.format("%shrs", dt1.until(dt2, ChronoUnit.HOURS));
     }
 
-    private VerticalLayout getStopLayout(String airport) {
+    private VerticalLayout buildStopLayout(String airport) {
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.add(getTextDiv(""), getAirportAnchor(airport), getTextDiv(getDuration()));
+        verticalLayout.add(buildTextDiv(""), buildAirportAnchor(airport), buildTextDiv(getDuration()));
         verticalLayout.setAlignItems(Alignment.CENTER);
         verticalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         verticalLayout.setClassName("stop-layout");
@@ -83,11 +83,11 @@ public class StopComponent extends HorizontalLayout {
         return verticalLayout;
     }
 
-    private VerticalLayout getDateTimeLayout(LocalDateTime dateTime) {
+    private VerticalLayout buildDateTimeLayout(LocalDateTime dateTime) {
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.add(getTextDiv(dateTime.format(DateUtils.OUTPUT_DATE_FORMATTER)));
-        verticalLayout.add(getTextDiv(dateTime.format(DateUtils.OUTPUT_WEEKDAY_FORMATTER)));
-        verticalLayout.add(getTextDiv(dateTime.format(DateUtils.OUTPUT_TIME_FORMATTER)));
+        verticalLayout.add(buildTextDiv(dateTime.format(DateUtils.OUTPUT_DATE_FORMATTER)));
+        verticalLayout.add(buildTextDiv(dateTime.format(DateUtils.OUTPUT_WEEKDAY_FORMATTER)));
+        verticalLayout.add(buildTextDiv(dateTime.format(DateUtils.OUTPUT_TIME_FORMATTER)));
         verticalLayout.setAlignItems(Alignment.CENTER);
         verticalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         verticalLayout.setMargin(false);
@@ -97,7 +97,7 @@ public class StopComponent extends HorizontalLayout {
         return verticalLayout;
     }
 
-    private static Div getTextDiv(String text) {
+    private static Div buildTextDiv(String text) {
         Div div = new Div();
         div.setText(text);
         div.getStyle().set("padding", "0px");
@@ -109,7 +109,7 @@ public class StopComponent extends HorizontalLayout {
         return div;
     }
 
-    private static Anchor getAirportAnchor(String airport) {
+    private static Anchor buildAirportAnchor(String airport) {
         Anchor anchor = new Anchor(
                 String.format("https://www.flightstats.com/v2/airport-conditions/%s", airport.toLowerCase()), airport);
         anchor.setTarget("_blank");
@@ -121,7 +121,7 @@ public class StopComponent extends HorizontalLayout {
         anchor.getStyle().set("text-align", "center");
         anchor.getStyle().set("text-decoration", "none");
         anchor.getStyle().set("justify-content", "center");
-        
+
         return anchor;
     }
 }

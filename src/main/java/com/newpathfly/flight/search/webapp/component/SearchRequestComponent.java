@@ -16,16 +16,17 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.Autocapitalize;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.renderer.TextRenderer;
 
 public class SearchRequestComponent extends CustomField<SearchRequest> {
 
     public static final DateTimeFormatter DATE_FORMAT_YYYYMMDD = DateTimeFormatter.ofPattern("uuuuMMdd")
             .withResolverStyle(ResolverStyle.STRICT);
 
-    private final RadioButtonGroup<TripType> _tripTypeRadioButtonGroup;
+    private final Select<TripType> _tripTypeSelect;
 
     private final TextField _depAirportTextField;
     private final TextField _arrAirportTextField;
@@ -35,7 +36,7 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
 
     public SearchRequestComponent() {
         // create components
-        _tripTypeRadioButtonGroup = buildTripTypeRadioButtonGroup();
+        _tripTypeSelect = buildTripTypeSelect();
 
         _depAirportTextField = buildAirportTextField("Departure Airport", VaadinIcon.FLIGHT_TAKEOFF);
         _arrAirportTextField = buildAirportTextField("Arrival Airport", VaadinIcon.FLIGHT_LANDING);
@@ -58,7 +59,7 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
         _retDatePicker.setEnabled(false);
 
         // create event handlers
-        _tripTypeRadioButtonGroup.addValueChangeListener(e -> {
+        _tripTypeSelect.addValueChangeListener(e -> {
             _retDatePicker.setEnabled(TripType.RT.equals(e.getValue()));
         });
 
@@ -84,7 +85,7 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
     @Override
     protected SearchRequest generateModelValue() {
 
-        TripType tripType = _tripTypeRadioButtonGroup.getValue();
+        TripType tripType = _tripTypeSelect.getValue();
 
         List<Query> queries = new ArrayList<>(TripType.OW.equals(tripType) ? 1 : 2);
 
@@ -125,7 +126,7 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
 
     @Override
     protected void setPresentationValue(SearchRequest searchRequest) {
-        _tripTypeRadioButtonGroup.setValue(searchRequest.getType());
+        _tripTypeSelect.setValue(searchRequest.getType());
 
         _depAirportTextField.setValue(searchRequest.getQueries().get(0).getDepAirport());
         _arrAirportTextField.setValue(searchRequest.getQueries().get(0).getArrAirport());
@@ -138,7 +139,8 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
 
     private HorizontalLayout buildHorizontalLayout() {
         HorizontalLayout layout = new HorizontalLayout( //
-                _tripTypeRadioButtonGroup, //
+                // _tripTypeRadioButtonGroup, //
+                _tripTypeSelect, //
                 _depAirportTextField, //
                 _arrAirportTextField, //
                 _depDatePicker, //
@@ -159,6 +161,7 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
         textField.setAutocapitalize(Autocapitalize.CHARACTERS);
         textField.setClearButtonVisible(true);
         textField.setMaxLength(3);
+        textField.setAutoselect(true);
 
         textField.addBlurListener(e -> {
             textField.setValue(textField.getValue().toUpperCase());
@@ -167,11 +170,12 @@ public class SearchRequestComponent extends CustomField<SearchRequest> {
         return textField;
     }
 
-    private static RadioButtonGroup<TripType> buildTripTypeRadioButtonGroup() {
-        RadioButtonGroup<TripType> radioButtonGroup = new RadioButtonGroup<>();
-        radioButtonGroup.setItems(TripType.OW, TripType.RT);
-        radioButtonGroup.setValue(TripType.OW);
-        return radioButtonGroup;
+    private static Select<TripType> buildTripTypeSelect() {
+        Select<TripType> select = new Select<>(TripType.values());
+        select.setLabel("Trip Type");
+        select.setValue(TripType.OW);
+        select.setRenderer(new TextRenderer<>(t -> t.equals(TripType.OW) ? "One Way" : "Round Trip"));
+        return select;
     }
 
     private DatePicker buildDatePicker(String label, LocalDate defaultDate, LocalDate minDate) {

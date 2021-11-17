@@ -10,8 +10,8 @@ public class SegmentComponent extends VerticalLayout {
     public SegmentComponent(Segment segment) {
 
         // construct
-        add(getCarrierLogo(segment.getCarrier()));
-        add(getFlightAnchor(segment.getFlightNo()));
+        add(buildCarrierLogo(segment.getCarrier()));
+        add(buildFlightAnchor(segment.getFlightNo()));
 
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -20,7 +20,7 @@ public class SegmentComponent extends VerticalLayout {
         setSpacing(false);
     }
 
-    private static Image getCarrierLogo(String carrierCode) {
+    private static Image buildCarrierLogo(String carrierCode) {
         Image image = new Image(
                 String.format("airline_logos/%s.png", carrierCode.toLowerCase()),
                 carrierCode);
@@ -31,7 +31,7 @@ public class SegmentComponent extends VerticalLayout {
         return image;
     }
 
-    private static Anchor getFlightAnchor(String flightNo) {
+    private static Anchor buildFlightAnchor(String flightNo) {
         String carrierCode = flightNo.substring(0, 2);
         String numberOnly = flightNo.substring(2);
 

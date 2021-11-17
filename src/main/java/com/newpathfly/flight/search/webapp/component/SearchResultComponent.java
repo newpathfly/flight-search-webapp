@@ -23,7 +23,7 @@ public class SearchResultComponent extends VerticalLayout {
 
     // UI
     private final RadioButtonGroup<SortTypeEnum> _sortControl;
-    private final Div _noResultDiv; 
+    private final Div _noResultDiv;
     private final TripGrid _tripGridComponent;
 
     public SearchResultComponent() {
@@ -34,13 +34,14 @@ public class SearchResultComponent extends VerticalLayout {
                 (a, b) -> Integer.compare(getStopCount(a), getStopCount(b)));
 
         // constructors
-        _sortControl = getSortControl();
+        _sortControl = buildSortControl();
         HorizontalLayout sortControlLayout = new HorizontalLayout(_sortControl);
         sortControlLayout.setJustifyContentMode(JustifyContentMode.END);
         sortControlLayout.setWidthFull();
 
         _noResultDiv = new Div();
         _noResultDiv.add("No result at the moment");
+        _noResultDiv.getStyle().set("font-weight", "lighter");
 
         _tripGridComponent = new TripGrid();
         switchSortType(_sortControl.getValue());
@@ -134,7 +135,7 @@ public class SearchResultComponent extends VerticalLayout {
         ));
     }
 
-    private static RadioButtonGroup<SortTypeEnum> getSortControl() {
+    private static RadioButtonGroup<SortTypeEnum> buildSortControl() {
         RadioButtonGroup<SortTypeEnum> sortControl = new RadioButtonGroup<>();
         sortControl.setItems(SortTypeEnum.BY_STOPS, SortTypeEnum.BY_PRICE);
         sortControl.setLabel("Sort by");

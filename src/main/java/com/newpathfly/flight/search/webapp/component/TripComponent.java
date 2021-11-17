@@ -15,12 +15,12 @@ public class TripComponent extends VerticalLayout {
 
         // construct
         Flight depFlight = trip.getFlights().get(0);
-        add(getFlightLayout(depFlight, false));
+        add(buildFlightLayout(depFlight, false));
 
         if (trip.getFlights().size() > 1) {
             // add the return flight
             Flight retFlight = trip.getFlights().get(1);
-            add(getFlightLayout(retFlight, true));
+            add(buildFlightLayout(retFlight, true));
         }
 
         setMargin(true);
@@ -28,17 +28,17 @@ public class TripComponent extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
-    private static HorizontalLayout getFlightLayout(Flight flight, boolean returnFlight) {
+    private static HorizontalLayout buildFlightLayout(Flight flight, boolean returnFlight) {
         HorizontalLayout flightLayout = new HorizontalLayout();
-        flightLayout.add(getFlightTypeIcon(returnFlight));
-        flightLayout.add(getFlightScroller(flight));
+        flightLayout.add(buildFlightTypeIcon(returnFlight));
+        flightLayout.add(buildFlightScroller(flight));
 
         flightLayout.setAlignItems(Alignment.CENTER);
         flightLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         return flightLayout;
     }
 
-    private static Scroller getFlightScroller(Flight flight) {
+    private static Scroller buildFlightScroller(Flight flight) {
         FlightComponent flightComponentHorizontal = new FlightComponent(flight);
         flightComponentHorizontal.getStyle().set("display", "inline-flex");
 
@@ -51,7 +51,7 @@ public class TripComponent extends VerticalLayout {
         return scroller;
     }
 
-    private static Icon getFlightTypeIcon(boolean returnFlight) {
+    private static Icon buildFlightTypeIcon(boolean returnFlight) {
         Icon icon;
 
         if (returnFlight) {
