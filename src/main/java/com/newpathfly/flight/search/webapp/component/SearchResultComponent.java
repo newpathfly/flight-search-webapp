@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import com.newpathfly.flight.search.webapp.adapter.TripAdapter;
 import com.newpathfly.flight.search.webapp.model.SortTypeEnum;
 import com.newpathfly.model.Flight;
 import com.newpathfly.model.Price;
@@ -16,8 +17,8 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 
 public class SearchResultComponent extends VerticalLayout {
 
-    private final PriorityBlockingQueue<Trip> _tripsQueueByPrice;
-    private final PriorityBlockingQueue<Trip> _tripsQueueByStops;
+    private final PriorityBlockingQueue<TripAdapter> _tripsQueueByPrice;
+    private final PriorityBlockingQueue<TripAdapter> _tripsQueueByStops;
 
     // UI
     private final RadioButtonGroup<SortTypeEnum> _sortControl;
@@ -63,7 +64,7 @@ public class SearchResultComponent extends VerticalLayout {
         return _tripGridComponent;
     }
 
-    public void add(List<Trip> trips) {
+    public void add(List<TripAdapter> trips) {
         _tripsQueueByPrice.addAll(trips);
         _tripsQueueByStops.addAll(trips);
 
@@ -105,7 +106,7 @@ public class SearchResultComponent extends VerticalLayout {
         _tripGridComponent.refresh();
     }
 
-    private void setDataProvider(Collection<Trip> trips) {
+    private void setDataProvider(Collection<TripAdapter> trips) {
         // lazy loading for performance
         _tripGridComponent.setDataProvider(DataProvider.fromCallbacks( //
                 q -> {

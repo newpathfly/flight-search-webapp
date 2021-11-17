@@ -1,8 +1,10 @@
 package com.newpathfly.flight.search.webapp.view;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.newpathfly.flight.search.webapp.adapter.TripAdapter;
 import com.newpathfly.flight.search.webapp.component.SearchResultComponent;
 import com.newpathfly.model.PollResponse;
 import com.newpathfly.model.Trip;
@@ -37,7 +39,7 @@ public class TestView extends VerticalLayout {
         _searchResultGridComponent = new SearchResultComponent();
 
         _addButton.addClickListener(e -> {
-            _searchResultGridComponent.add(buildTripList());
+            _searchResultGridComponent.add(buildTripList().stream().map(TripAdapter::new).collect(Collectors.toList()));
         });
 
         _clearButton.addClickListener(e -> {
