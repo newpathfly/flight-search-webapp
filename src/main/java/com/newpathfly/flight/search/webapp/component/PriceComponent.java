@@ -1,12 +1,12 @@
 package com.newpathfly.flight.search.webapp.component;
 
-import com.newpathfly.model.Price;
+import com.newpathfly.flight.search.webapp.adapter.PriceAdapter;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class PriceComponent extends VerticalLayout {
 
-    public PriceComponent(Price price) {
+    public PriceComponent(PriceAdapter price) {
 
         // construct
         Div priceDiv;

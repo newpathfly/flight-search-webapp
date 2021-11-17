@@ -1,7 +1,7 @@
 package com.newpathfly.flight.search.webapp.component;
 
+import com.newpathfly.flight.search.webapp.adapter.TripAdapter;
 import com.newpathfly.model.Flight;
-import com.newpathfly.model.Trip;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class TripComponent extends VerticalLayout {
 
-    public TripComponent(Trip trip) {
+    public TripComponent(TripAdapter trip) {
 
         // construct
         Flight depFlight = trip.getFlights().get(0);

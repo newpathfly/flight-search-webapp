@@ -1,6 +1,9 @@
 package com.newpathfly.flight.search.webapp.view;
 
+import java.util.stream.Collectors;
+
 import com.newpathfly.api.ShoppingApi;
+import com.newpathfly.flight.search.webapp.adapter.TripAdapter;
 import com.newpathfly.flight.search.webapp.component.LogNotification;
 import com.newpathfly.flight.search.webapp.component.SearchButton;
 import com.newpathfly.flight.search.webapp.component.SearchRequestComponent;
@@ -190,7 +193,8 @@ public class MainView extends VerticalLayout {
             getUI().orElseThrow(
                     () -> new RuntimeException("current compoent not attached to a UI - cannot add trips to grid"))
                     .access(() -> {
-                        _searchResultGridComponent.add(pollResponse.getTrips());
+                        _searchResultGridComponent.add(
+                                pollResponse.getTrips().stream().map(TripAdapter::new).collect(Collectors.toList()));
                     });
         }
 

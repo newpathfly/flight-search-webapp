@@ -1,13 +1,19 @@
 package com.newpathfly.flight.search.webapp.component;
 
-import com.newpathfly.model.Trip;
+import com.newpathfly.flight.search.webapp.adapter.PriceAdapter;
+import com.newpathfly.flight.search.webapp.adapter.TripAdapter;
+import com.newpathfly.model.Price;
 import com.vaadin.flow.component.grid.Grid;
 
-public class TripGrid extends Grid<Trip> {
+public class TripGrid extends Grid<TripAdapter> {
 
     public TripGrid() {
-        addComponentColumn(TripComponent::new).setWidth("800px").setKey("trip");
-        addComponentColumn(t -> new PriceComponent(t.getPrices().getALL())).setKey("price");
+        addComponentColumn(t -> new TripComponent(new TripAdapter(t))).setWidth("800px");
+
+        addComponentColumn(t -> {
+            Price price = t.getPrices().getALL();
+            return new PriceComponent(null == price ? null : new PriceAdapter(price));
+        });
 
         setSelectionMode(SelectionMode.NONE);
         setHeight("auto !important");
