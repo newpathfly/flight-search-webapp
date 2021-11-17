@@ -53,7 +53,7 @@ public class SearchResultComponent extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         setWidth("956px");
-        setHeight("100vh");
+        setHeight("90vh");
 
         getStyle().set("border-width", "1px");
         getStyle().set("border-color", "#AAAAAA");

@@ -16,7 +16,7 @@ public class TripGrid extends Grid<TripAdapter> {
         });
 
         setSelectionMode(SelectionMode.NONE);
-        setHeight("auto !important");
+        setPageSize(10);
 
         getStyle().set("border-style", "none");
     }
