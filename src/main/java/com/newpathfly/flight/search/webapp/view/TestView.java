@@ -50,8 +50,9 @@ public class TestView extends VerticalLayout {
         add(_searchResultGridComponent);
 
         setSpacing(false);
-        setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
+
+        setHeight("100vh");
     }
 
     @SneakyThrows

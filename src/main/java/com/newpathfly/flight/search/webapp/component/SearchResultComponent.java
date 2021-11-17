@@ -53,11 +53,11 @@ public class SearchResultComponent extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         setWidth("956px");
-        setHeight("90vh");
+        setHeightFull();
 
         getStyle().set("border-width", "1px");
         getStyle().set("border-color", "#AAAAAA");
-        getStyle().set("border-top-style", "dotted");
+        getStyle().set("border-top-style", "solid");
     }
 
     public TripGrid getTripGridComponent() {

@@ -97,8 +97,8 @@ public class MainView extends VerticalLayout {
 
         // misc settings
         setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
         setSpacing(false);
+        setHeight("100vh");
 
         add( //
                 _searchComponent, //
