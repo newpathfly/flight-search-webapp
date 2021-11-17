@@ -9,10 +9,10 @@ import com.newpathfly.model.Flight;
 import com.newpathfly.model.Segment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
-public class FlightComponentHorizontal extends HorizontalLayout {
+public class FlightComponent extends HorizontalLayout {
     private final List<Segment> _segmentList;
 
-    public FlightComponentHorizontal(Flight flight) {
+    public FlightComponent(Flight flight) {
         // initialize
         _segmentList = flight.getSegments();
 
@@ -40,7 +40,7 @@ public class FlightComponentHorizontal extends HorizontalLayout {
 
         Segment lastSegment = null;
 
-        while(segmentIterator.hasNext()) {
+        while (segmentIterator.hasNext()) {
             Segment nextSegment = segmentIterator.next();
 
             stops.add(new Stop(lastSegment, nextSegment));

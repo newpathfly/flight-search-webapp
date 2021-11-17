@@ -3,8 +3,8 @@ package com.newpathfly.flight.search.webapp.view;
 import com.newpathfly.api.ShoppingApi;
 import com.newpathfly.flight.search.webapp.component.LogNotification;
 import com.newpathfly.flight.search.webapp.component.SearchButton;
-import com.newpathfly.flight.search.webapp.component.SearchRequestCustomField;
-import com.newpathfly.flight.search.webapp.component.SearchResultGridComponent;
+import com.newpathfly.flight.search.webapp.component.SearchRequestComponent;
+import com.newpathfly.flight.search.webapp.component.SearchResultComponent;
 import com.newpathfly.flight.search.webapp.event.CancelPollingEvent;
 import com.newpathfly.flight.search.webapp.event.LogEvent;
 import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
@@ -40,9 +40,9 @@ public class MainView extends VerticalLayout {
     private final transient ShoppingApi _shoppingApi;
 
     // UI
-    private final SearchRequestCustomField _searchComponent;
+    private final SearchRequestComponent _searchComponent;
     private final SearchButton _searchButton;
-    private final SearchResultGridComponent _searchResultGridComponent;
+    private final SearchResultComponent _searchResultGridComponent;
 
     private final UI _currentUI;
 
@@ -51,9 +51,9 @@ public class MainView extends VerticalLayout {
         _shoppingApi = shoppingApi;
 
         // constructors
-        _searchComponent = new SearchRequestCustomField();
+        _searchComponent = new SearchRequestComponent();
         _searchButton = new SearchButton();
-        _searchResultGridComponent = new SearchResultGridComponent();
+        _searchResultGridComponent = new SearchResultComponent();
         _currentUI = UI.getCurrent();
 
         // UI Listeners

@@ -3,7 +3,7 @@ package com.newpathfly.flight.search.webapp.view;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newpathfly.flight.search.webapp.component.SearchResultGridComponent;
+import com.newpathfly.flight.search.webapp.component.SearchResultComponent;
 import com.newpathfly.model.PollResponse;
 import com.newpathfly.model.Trip;
 import com.vaadin.flow.component.button.Button;
@@ -18,23 +18,23 @@ import org.springframework.core.io.ResourceLoader;
 import lombok.SneakyThrows;
 
 @Route(value = "/test1")
-public class TripGridTestView extends VerticalLayout {
+public class TestView extends VerticalLayout {
 
     private final Button _addButton;
     private final Button _clearButton;
-    private final SearchResultGridComponent _searchResultGridComponent;
+    private final SearchResultComponent _searchResultGridComponent;
 
     private final transient ResourceLoader _resourceLoader;
     private final transient ObjectMapper _objectMapper;
 
-    public TripGridTestView(@Autowired ResourceLoader resourceLoader) {
+    public TestView(@Autowired ResourceLoader resourceLoader) {
 
         _resourceLoader = resourceLoader;
         _objectMapper = new ObjectMapper();
 
         _addButton = new Button("Add");
         _clearButton = new Button("Clear");
-        _searchResultGridComponent = new SearchResultGridComponent();
+        _searchResultGridComponent = new SearchResultComponent();
 
         _addButton.addClickListener(e -> {
             _searchResultGridComponent.add(buildTripList());

@@ -3,11 +3,11 @@ package com.newpathfly.flight.search.webapp.component;
 import com.newpathfly.model.Trip;
 import com.vaadin.flow.component.grid.Grid;
 
-public class TripGridComponent extends Grid<Trip> {
+public class TripGrid extends Grid<Trip> {
 
-    public TripGridComponent() {
+    public TripGrid() {
         addComponentColumn(TripComponent::new).setWidth("800px").setKey("trip");
-        addComponentColumn(t -> new PriceComponent(t.getPrices().getADT())).setKey("price");
+        addComponentColumn(t -> new PriceComponent(t.getPrices().getALL())).setKey("price");
 
         setSelectionMode(SelectionMode.NONE);
         setHeight("auto !important");

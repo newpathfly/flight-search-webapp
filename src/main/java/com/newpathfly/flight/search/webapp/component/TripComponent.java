@@ -39,7 +39,7 @@ public class TripComponent extends VerticalLayout {
     }
 
     private static Scroller getFlightScroller(Flight flight) {
-        FlightComponentHorizontal flightComponentHorizontal = new FlightComponentHorizontal(flight);
+        FlightComponent flightComponentHorizontal = new FlightComponent(flight);
         flightComponentHorizontal.getStyle().set("display", "inline-flex");
 
         Scroller scroller = new Scroller();
@@ -53,7 +53,7 @@ public class TripComponent extends VerticalLayout {
 
     private static Icon getFlightTypeIcon(boolean returnFlight) {
         Icon icon;
-        
+
         if (returnFlight) {
             icon = VaadinIcon.ARROW_CIRCLE_LEFT.create();
         } else {
