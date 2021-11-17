@@ -12,11 +12,11 @@ public class PriceComponent extends VerticalLayout {
         Div priceDiv;
         Div currencyDiv;
         if (null == price) {
-            priceDiv = getTextDiv("N/A", "bold");
-            currencyDiv = getTextDiv("", "light");
+            priceDiv = buildTextDiv("N/A", "bold");
+            currencyDiv = buildTextDiv("", "light");
         } else {
-            priceDiv = getTextDiv(String.format("%.2f", price.getTotalPrice()), "bold");
-            currencyDiv = getTextDiv(price.getCurrencyCode(), "light");
+            priceDiv = buildTextDiv(String.format("%.2f", price.getTotalPrice()), "bold");
+            currencyDiv = buildTextDiv(price.getCurrencyCode(), "light");
         }
 
         add(priceDiv);
@@ -28,7 +28,7 @@ public class PriceComponent extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
-    private static Div getTextDiv(String text, String fontWeight) {
+    private static Div buildTextDiv(String text, String fontWeight) {
         Div div = new Div();
         div.setText(text);
         div.getStyle().set("padding", "0px");

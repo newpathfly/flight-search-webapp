@@ -9,6 +9,7 @@ import com.newpathfly.flight.search.webapp.model.SortTypeEnum;
 import com.newpathfly.model.Flight;
 import com.newpathfly.model.Price;
 import com.newpathfly.model.Trip;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
@@ -22,6 +23,7 @@ public class SearchResultComponent extends VerticalLayout {
 
     // UI
     private final RadioButtonGroup<SortTypeEnum> _sortControl;
+    private final Div _noResultDiv;
     private final TripGrid _tripGridComponent;
 
     public SearchResultComponent() {
@@ -32,10 +34,14 @@ public class SearchResultComponent extends VerticalLayout {
                 (a, b) -> Integer.compare(getStopCount(a), getStopCount(b)));
 
         // constructors
-        _sortControl = getSortControl();
+        _sortControl = buildSortControl();
         HorizontalLayout sortControlLayout = new HorizontalLayout(_sortControl);
         sortControlLayout.setJustifyContentMode(JustifyContentMode.END);
         sortControlLayout.setWidthFull();
+
+        _noResultDiv = new Div();
+        _noResultDiv.add("No result at the moment");
+        _noResultDiv.getStyle().set("font-weight", "lighter");
 
         _tripGridComponent = new TripGrid();
         switchSortType(_sortControl.getValue());
@@ -45,6 +51,7 @@ public class SearchResultComponent extends VerticalLayout {
 
         add( //
                 sortControlLayout, //
+                _noResultDiv, //
                 _tripGridComponent //
         );
 
@@ -53,11 +60,11 @@ public class SearchResultComponent extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
         setWidth("956px");
-        setHeight("90vh");
+        setHeightFull();
 
         getStyle().set("border-width", "1px");
         getStyle().set("border-color", "#AAAAAA");
-        getStyle().set("border-top-style", "dotted");
+        getStyle().set("border-top-style", "solid");
     }
 
     public TripGrid getTripGridComponent() {
@@ -68,14 +75,14 @@ public class SearchResultComponent extends VerticalLayout {
         _tripsQueueByPrice.addAll(trips);
         _tripsQueueByStops.addAll(trips);
 
-        _tripGridComponent.refresh();
+        refresh();
     }
 
     public void clear() {
         _tripsQueueByPrice.clear();
         _tripsQueueByStops.clear();
 
-        _tripGridComponent.refresh();
+        refresh();
     }
 
     public int size() {
@@ -103,7 +110,15 @@ public class SearchResultComponent extends VerticalLayout {
             // do nothing
         }
 
-        _tripGridComponent.refresh();
+        refresh();
+    }
+
+    private void refresh() {
+        assert _tripsQueueByPrice.size() == _tripsQueueByStops.size();
+
+        _noResultDiv.setVisible(_tripsQueueByPrice.isEmpty());
+
+        _tripGridComponent.getDataProvider().refreshAll();
     }
 
     private void setDataProvider(Collection<TripAdapter> trips) {
@@ -120,7 +135,7 @@ public class SearchResultComponent extends VerticalLayout {
         ));
     }
 
-    private static RadioButtonGroup<SortTypeEnum> getSortControl() {
+    private static RadioButtonGroup<SortTypeEnum> buildSortControl() {
         RadioButtonGroup<SortTypeEnum> sortControl = new RadioButtonGroup<>();
         sortControl.setItems(SortTypeEnum.BY_STOPS, SortTypeEnum.BY_PRICE);
         sortControl.setLabel("Sort by");

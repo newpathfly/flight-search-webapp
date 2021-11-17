@@ -18,6 +18,9 @@ import com.newpathfly.model.PollResponse;
 import com.newpathfly.model.SearchRequest;
 import com.newpathfly.model.SearchResultPoll;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
@@ -46,6 +49,7 @@ public class MainView extends VerticalLayout {
     private final SearchRequestComponent _searchComponent;
     private final SearchButton _searchButton;
     private final SearchResultComponent _searchResultGridComponent;
+    private final Div _footer;
 
     private final UI _currentUI;
 
@@ -57,6 +61,9 @@ public class MainView extends VerticalLayout {
         _searchComponent = new SearchRequestComponent();
         _searchButton = new SearchButton();
         _searchResultGridComponent = new SearchResultComponent();
+
+        _footer = buildFooter();
+
         _currentUI = UI.getCurrent();
 
         // UI Listeners
@@ -97,13 +104,14 @@ public class MainView extends VerticalLayout {
 
         // misc settings
         setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
         setSpacing(false);
+        setHeight("100vh");
 
         add( //
                 _searchComponent, //
                 _searchButton, //
-                _searchResultGridComponent //
+                _searchResultGridComponent, //
+                _footer //
         );
     }
 
@@ -220,5 +228,25 @@ public class MainView extends VerticalLayout {
         } else {
             fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, "Full content received - no more polling."));
         }
+    }
+
+    private static Div buildFooter() {
+
+        Span span = new Span("virtual interlining");
+        span.getStyle().set("font-style", "italic");
+
+        Anchor anchor = new Anchor("https://ticketcombine.com", "TicketCombine");
+        anchor.setTarget("_blank");
+
+        Div footer = new Div();
+        footer.add("Powered by ");
+        footer.add(anchor);
+        footer.add(" search engine with ");
+        footer.add(span);
+
+        footer.getStyle().set("font-weight", "lighter");
+        footer.getStyle().set("font-size", "small");
+
+        return footer;
     }
 }
