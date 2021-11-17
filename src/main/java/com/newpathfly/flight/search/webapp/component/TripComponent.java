@@ -7,38 +7,39 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.Scroller.ScrollDirection;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class TripComponent extends HorizontalLayout {
-
-    private final Trip _trip;
+public class TripComponent extends VerticalLayout {
 
     public TripComponent(Trip trip) {
 
-        // initialize
-        _trip = trip;
-
         // construct
-        Flight depFlight = _trip.getFlights().get(0);
-        add(getFlightTypeIcon(false));
-        add(getFlightScroller(depFlight));
+        Flight depFlight = trip.getFlights().get(0);
+        add(getFlightLayout(depFlight, false));
 
-        if (_trip.getFlights().size() > 1) {
+        if (trip.getFlights().size() > 1) {
             // add the return flight
-            Flight retFlight = _trip.getFlights().get(1);
-            add(getFlightTypeIcon(true));
-            add(getFlightScroller(retFlight));
+            Flight retFlight = trip.getFlights().get(1);
+            add(getFlightLayout(retFlight, true));
         }
 
-        add(new PriceComponent(_trip.getPrices().getADT()));
-
-        setClassName("trip-component");
         setMargin(true);
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
+    private static HorizontalLayout getFlightLayout(Flight flight, boolean returnFlight) {
+        HorizontalLayout flightLayout = new HorizontalLayout();
+        flightLayout.add(getFlightTypeIcon(returnFlight));
+        flightLayout.add(getFlightScroller(flight));
+
+        flightLayout.setAlignItems(Alignment.CENTER);
+        flightLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        return flightLayout;
+    }
+
     private static Scroller getFlightScroller(Flight flight) {
-        FlightComponentHorizontal flightComponentHorizontal = new FlightComponentHorizontal(flight);
+        FlightComponent flightComponentHorizontal = new FlightComponent(flight);
         flightComponentHorizontal.getStyle().set("display", "inline-flex");
 
         Scroller scroller = new Scroller();
@@ -52,7 +53,7 @@ public class TripComponent extends HorizontalLayout {
 
     private static Icon getFlightTypeIcon(boolean returnFlight) {
         Icon icon;
-        
+
         if (returnFlight) {
             icon = VaadinIcon.ARROW_CIRCLE_LEFT.create();
         } else {

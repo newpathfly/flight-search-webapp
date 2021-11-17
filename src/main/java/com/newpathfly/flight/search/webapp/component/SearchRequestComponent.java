@@ -20,7 +20,7 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.Autocapitalize;
 import com.vaadin.flow.component.textfield.TextField;
 
-public class SearchRequestCustomField extends CustomField<SearchRequest> {
+public class SearchRequestComponent extends CustomField<SearchRequest> {
 
     public static final DateTimeFormatter DATE_FORMAT_YYYYMMDD = DateTimeFormatter.ofPattern("uuuuMMdd")
             .withResolverStyle(ResolverStyle.STRICT);
@@ -33,7 +33,7 @@ public class SearchRequestCustomField extends CustomField<SearchRequest> {
     private final DatePicker _depDatePicker;
     private final DatePicker _retDatePicker;
 
-    public SearchRequestCustomField() {
+    public SearchRequestComponent() {
         // create components
         _tripTypeRadioButtonGroup = buildTripTypeRadioButtonGroup();
 
@@ -42,7 +42,6 @@ public class SearchRequestCustomField extends CustomField<SearchRequest> {
 
         _depDatePicker = buildDatePicker("Departure Date", LocalDate.now().plusWeeks(1), LocalDate.now().plusDays(1));
         _retDatePicker = buildDatePicker("Return Date", LocalDate.now().plusWeeks(2), _depDatePicker.getValue());
-
 
         _depDatePicker.addValueChangeListener(e -> {
             // whenever departure date changes, update minimum return date
@@ -89,11 +88,11 @@ public class SearchRequestCustomField extends CustomField<SearchRequest> {
 
         List<Query> queries = new ArrayList<>(TripType.OW.equals(tripType) ? 1 : 2);
 
-        if(_depAirportTextField.getValue().isEmpty() || _arrAirportTextField.getValue().isEmpty()) {
+        if (_depAirportTextField.getValue().isEmpty() || _arrAirportTextField.getValue().isEmpty()) {
             return null;
         }
 
-        if(null == _depDatePicker.getValue() || null == _retDatePicker.getValue()) {
+        if (null == _depDatePicker.getValue() || null == _retDatePicker.getValue()) {
             return null;
         }
 
@@ -182,6 +181,7 @@ public class SearchRequestCustomField extends CustomField<SearchRequest> {
         datePicker.setMax(LocalDate.now().plusDays(180));
         datePicker.setClearButtonVisible(true);
         datePicker.setWidth("152px");
+        datePicker.setAutoOpen(true);
         return datePicker;
     }
 

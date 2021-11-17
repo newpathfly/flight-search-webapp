@@ -6,10 +6,8 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class SegmentComponent extends VerticalLayout {
-    private final Segment _segment;
 
     public SegmentComponent(Segment segment) {
-        _segment = segment;
 
         // construct
         add(getCarrierLogo(segment.getCarrier()));
@@ -20,10 +18,6 @@ public class SegmentComponent extends VerticalLayout {
         setPadding(false);
         setWidth("60px");
         setSpacing(false);
-    }
-
-    public Segment getSegment() {
-        return _segment;
     }
 
     private static Image getCarrierLogo(String carrierCode) {

@@ -3,11 +3,11 @@ package com.newpathfly.flight.search.webapp.view;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newpathfly.flight.search.webapp.component.SortControlComponent;
-import com.newpathfly.flight.search.webapp.component.TripComponent;
-import com.newpathfly.flight.search.webapp.component.TripListComponent;
+import com.newpathfly.flight.search.webapp.component.SearchResultComponent;
 import com.newpathfly.model.PollResponse;
 import com.newpathfly.model.Trip;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -17,27 +17,35 @@ import org.springframework.core.io.ResourceLoader;
 
 import lombok.SneakyThrows;
 
-@Route(value = "/test2")
-public class TripListTestView extends VerticalLayout {
+@Route(value = "/test1")
+public class TestView extends VerticalLayout {
 
-    private final SortControlComponent _sortControlComponent;
-    private final TripListComponent _tripListComponent;
+    private final Button _addButton;
+    private final Button _clearButton;
+    private final SearchResultComponent _searchResultGridComponent;
 
     private final transient ResourceLoader _resourceLoader;
     private final transient ObjectMapper _objectMapper;
 
-    public TripListTestView(@Autowired ResourceLoader resourceLoader) {
-        _sortControlComponent = new SortControlComponent();
-        _tripListComponent = new TripListComponent();
+    public TestView(@Autowired ResourceLoader resourceLoader) {
+
         _resourceLoader = resourceLoader;
         _objectMapper = new ObjectMapper();
 
-        add(_sortControlComponent);
-        add(_tripListComponent);
+        _addButton = new Button("Add");
+        _clearButton = new Button("Clear");
+        _searchResultGridComponent = new SearchResultComponent();
 
-        buildTripList().forEach(t -> {
-            _tripListComponent.add(new TripComponent(t));
+        _addButton.addClickListener(e -> {
+            _searchResultGridComponent.add(buildTripList());
         });
+
+        _clearButton.addClickListener(e -> {
+            _searchResultGridComponent.clear();
+        });
+
+        add(new HorizontalLayout(_addButton, _clearButton));
+        add(_searchResultGridComponent);
 
         setSpacing(false);
         setJustifyContentMode(JustifyContentMode.CENTER);

@@ -1,131 +1,147 @@
 package com.newpathfly.flight.search.webapp.component;
 
-import com.newpathfly.api.ShoppingApi;
-import com.newpathfly.flight.search.webapp.event.LogEvent;
-import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
-import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
-import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
-import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
-import com.newpathfly.model.PollResponse;
-import com.newpathfly.model.SearchResultPoll;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.notification.NotificationVariant;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.PriorityBlockingQueue;
+
+import com.newpathfly.flight.search.webapp.model.SortTypeEnum;
+import com.newpathfly.model.Flight;
+import com.newpathfly.model.Price;
+import com.newpathfly.model.Trip;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.renderer.TextRenderer;
 
-import org.springframework.http.HttpStatus;
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class SearchResultComponent extends VerticalLayout {
 
-    private static final int MAX_POLL_OFFSET = 100;
-
-    // Logic
-    private final transient ShoppingApi _shoppingApi;
-
-    private String _currentRequestId;
+    private final PriorityBlockingQueue<Trip> _tripsQueueByPrice;
+    private final PriorityBlockingQueue<Trip> _tripsQueueByStops;
 
     // UI
-    private final SortControlComponent _sortControlComponent;
-    private final TripListComponent _tripListComponent;
-    private final UI _currentUI;
+    private final RadioButtonGroup<SortTypeEnum> _sortControl;
+    private final TripGrid _tripGridComponent;
 
-    public SearchResultComponent(ShoppingApi shoppingApi) {
+    public SearchResultComponent() {
 
-        _shoppingApi = shoppingApi;
+        _tripsQueueByPrice = new PriorityBlockingQueue<>(10,
+                (a, b) -> Double.compare(getTotalPrice(a), getTotalPrice(b)));
+        _tripsQueueByStops = new PriorityBlockingQueue<>(10,
+                (a, b) -> Integer.compare(getStopCount(a), getStopCount(b)));
 
         // constructors
-        _sortControlComponent = new SortControlComponent();
-        _tripListComponent = new TripListComponent();
-        _currentUI = UI.getCurrent();
+        _sortControl = getSortControl();
+        HorizontalLayout sortControlLayout = new HorizontalLayout(_sortControl);
+        sortControlLayout.setJustifyContentMode(JustifyContentMode.END);
+        sortControlLayout.setWidthFull();
 
-        // event listeners
-        _currentUI.getSession().getAttribute(CancelPollingEventRegistry.class).register(e -> {
-            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, "Search polling is getting cancelled."));
+        _tripGridComponent = new TripGrid();
+        switchSortType(_sortControl.getValue());
 
-            _currentRequestId = null;
-        });
-
-        _currentUI.getSession().getAttribute(SearchResultPollEventRegistry.class).register(e -> {
-
-            if (null == _currentRequestId || _currentRequestId.isEmpty()) {
-                return;
-            }
-
-            SearchResultPoll searchResultPoll = new SearchResultPoll() //
-                    .requestId(_currentRequestId) //
-                    .offset(_tripListComponent.getTripComponents().size()); //
-
-            _shoppingApi.createPollWithHttpInfo(searchResultPoll).subscribe( //
-                    r -> {
-                        PollResponse pollResponse = r.getBody();
-
-                        pollResponse.getTrips().forEach(_tripListComponent::add);
-
-                        if (HttpStatus.PARTIAL_CONTENT.equals(r.getStatusCode())) {
-                            int offset = _tripListComponent.getTripComponents().size();
-
-                            if (offset >= MAX_POLL_OFFSET) {
-                                return;
-                            }
-
-                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS, String.format(
-                                    "Partial content received - continue polling per 3 seconds. (RequestId: `%s`, Offset: `%s`)",
-                                    searchResultPoll.getRequestId(), offset)));
-
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException exception) {
-                                fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
-                                Thread.currentThread().interrupt();
-                            }
-
-                            fire(new SearchResultPollEvent());
-                        } else {
-                            fire(new LogEvent(NotificationVariant.LUMO_SUCCESS,
-                                    "Full content received - no more polling."));
-                        }
-                    }, //
-                    exception -> {
-                        log.error("error when creating poll", exception);
-                        fire(new LogEvent(NotificationVariant.LUMO_ERROR, exception.getMessage()));
-                    } //
-            );
-        });
-
-        // misc settings
+        // UI events
+        _sortControl.addValueChangeListener(e -> switchSortType(e.getValue()));
 
         add( //
-                _sortControlComponent, //
-                _tripListComponent //
+                sortControlLayout, //
+                _tripGridComponent //
         );
 
+        // misc settings
         setSpacing(false);
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
+        setWidth("956px");
+        setHeight("100vh");
+
+        getStyle().set("border-width", "1px");
+        getStyle().set("border-color", "#AAAAAA");
+        getStyle().set("border-top-style", "dotted");
     }
 
-    public void setCurrentRequestId(String currentRequestId) {
-        _currentRequestId = currentRequestId;
+    public TripGrid getTripGridComponent() {
+        return _tripGridComponent;
+    }
+
+    public void add(List<Trip> trips) {
+        _tripsQueueByPrice.addAll(trips);
+        _tripsQueueByStops.addAll(trips);
+
+        _tripGridComponent.refresh();
     }
 
     public void clear() {
-        _tripListComponent.clear();
+        _tripsQueueByPrice.clear();
+        _tripsQueueByStops.clear();
+
+        _tripGridComponent.refresh();
     }
 
-    private void fire(LogEvent e) {
-        getUI().orElseThrow(() -> new RuntimeException("current compoent not attached to a UI - can't fire ErrorEvent"))
-                .access(() -> {
-                    _currentUI.getSession().getAttribute(LogEventRegistry.class).sentEvent(e);
-                });
+    public int size() {
+        switch (_sortControl.getValue()) {
+        case BY_PRICE:
+            return _tripsQueueByPrice.size();
+        case BY_STOPS:
+            return _tripsQueueByStops.size();
+        default:
+            return 0;
+        }
     }
 
-    private void fire(SearchResultPollEvent e) {
-        getUI().orElseThrow(
-                () -> new RuntimeException("current compoent not attached to a UI - can't fire SearchResponseEvent"))
-                .access(() -> {
-                    _currentUI.getSession().getAttribute(SearchResultPollEventRegistry.class).sentEvent(e);
-                });
+    private void switchSortType(SortTypeEnum sortType) {
+        switch (sortType) {
+        case BY_PRICE:
+            setDataProvider(_tripsQueueByPrice);
+            break;
+
+        case BY_STOPS:
+            setDataProvider(_tripsQueueByStops);
+            break;
+
+        default:
+            // do nothing
+        }
+
+        _tripGridComponent.refresh();
+    }
+
+    private void setDataProvider(Collection<Trip> trips) {
+        // lazy loading for performance
+        _tripGridComponent.setDataProvider(DataProvider.fromCallbacks( //
+                q -> {
+                    int offset = q.getOffset();
+                    int limit = q.getLimit();
+                    return trips.stream().skip(offset).limit(limit);
+                }, //
+                q -> {
+                    return trips.size();
+                } //
+        ));
+    }
+
+    private static RadioButtonGroup<SortTypeEnum> getSortControl() {
+        RadioButtonGroup<SortTypeEnum> sortControl = new RadioButtonGroup<>();
+        sortControl.setItems(SortTypeEnum.BY_STOPS, SortTypeEnum.BY_PRICE);
+        sortControl.setLabel("Sort by");
+        sortControl.setValue(SortTypeEnum.BY_STOPS);
+        sortControl.setRenderer(new TextRenderer<>(SortTypeEnum::getValue));
+
+        return sortControl;
+    }
+
+    private static int getStopCount(Trip trip) {
+        int stopCount = 0;
+
+        for (Flight f : trip.getFlights()) {
+            stopCount += f.getSegments().size() - 2;
+        }
+
+        return stopCount;
+    }
+
+    private static double getTotalPrice(Trip trip) {
+        Price price = trip.getPrices().getALL();
+
+        return null == price ? -1 : price.getTotalPrice();
     }
 }
