@@ -22,7 +22,7 @@ public class SegmentComponent extends VerticalLayout {
 
     private static Image buildCarrierLogo(String carrierCode) {
         Image image = new Image(
-                String.format("airline_logos/%s.png", carrierCode.toLowerCase()),
+                String.format("https://newpathfly.ticketcombine.com/images/logos/%s.png", carrierCode.toLowerCase()),
                 carrierCode);
 
         image.setWidth("26px");
