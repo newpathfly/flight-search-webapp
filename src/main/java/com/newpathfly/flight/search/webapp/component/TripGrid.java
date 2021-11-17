@@ -21,8 +21,4 @@ public class TripGrid extends Grid<TripAdapter> {
 
         getStyle().set("border-style", "none");
     }
-
-    public void refresh() {
-        getDataProvider().refreshAll();
-    }
 }
