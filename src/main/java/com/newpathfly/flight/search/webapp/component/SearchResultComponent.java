@@ -1,8 +1,8 @@
 package com.newpathfly.flight.search.webapp.component;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.PriorityBlockingQueue;
 
 import com.newpathfly.flight.search.webapp.adapter.TripAdapter;
 import com.newpathfly.flight.search.webapp.model.SortTypeEnum;
@@ -18,8 +18,7 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 
 public class SearchResultComponent extends VerticalLayout {
 
-    private final PriorityBlockingQueue<TripAdapter> _tripsQueueByPrice;
-    private final PriorityBlockingQueue<TripAdapter> _tripsQueueByStops;
+    private final transient List<TripAdapter> _trips;
 
     // UI
     private final RadioButtonGroup<SortTypeEnum> _sortControl;
@@ -28,10 +27,7 @@ public class SearchResultComponent extends VerticalLayout {
 
     public SearchResultComponent() {
 
-        _tripsQueueByPrice = new PriorityBlockingQueue<>(10,
-                (a, b) -> Double.compare(getTotalPrice(a), getTotalPrice(b)));
-        _tripsQueueByStops = new PriorityBlockingQueue<>(10,
-                (a, b) -> Integer.compare(getStopCount(a), getStopCount(b)));
+        _trips = new ArrayList<>();
 
         // constructors
         _sortControl = buildSortControl();
@@ -72,38 +68,29 @@ public class SearchResultComponent extends VerticalLayout {
     }
 
     public void add(List<TripAdapter> trips) {
-        _tripsQueueByPrice.addAll(trips);
-        _tripsQueueByStops.addAll(trips);
+        _trips.addAll(trips);
 
         refresh();
     }
 
     public void clear() {
-        _tripsQueueByPrice.clear();
-        _tripsQueueByStops.clear();
+        _trips.clear();
 
         refresh();
     }
 
     public int size() {
-        switch (_sortControl.getValue()) {
-        case BY_PRICE:
-            return _tripsQueueByPrice.size();
-        case BY_STOPS:
-            return _tripsQueueByStops.size();
-        default:
-            return 0;
-        }
+        return _trips.size();
     }
 
     private void switchSortType(SortTypeEnum sortType) {
         switch (sortType) {
         case BY_PRICE:
-            setDataProvider(_tripsQueueByPrice);
+            setDataProvider(comparatorByPrice);
             break;
 
         case BY_STOPS:
-            setDataProvider(_tripsQueueByStops);
+            setDataProvider(comparatorByStops);
             break;
 
         default:
@@ -114,23 +101,22 @@ public class SearchResultComponent extends VerticalLayout {
     }
 
     private void refresh() {
-        assert _tripsQueueByPrice.size() == _tripsQueueByStops.size();
 
-        _noResultDiv.setVisible(_tripsQueueByPrice.isEmpty());
+        _noResultDiv.setVisible(_trips.isEmpty());
 
         _tripGridComponent.getDataProvider().refreshAll();
     }
 
-    private void setDataProvider(Collection<TripAdapter> trips) {
+    private void setDataProvider(Comparator<TripAdapter> comparator) {
         // lazy loading for performance
         _tripGridComponent.setDataProvider(DataProvider.fromCallbacks( //
                 q -> {
                     int offset = q.getOffset();
                     int limit = q.getLimit();
-                    return trips.stream().skip(offset).limit(limit);
+                    return _trips.stream().sorted(comparator).skip(offset).limit(limit);
                 }, //
                 q -> {
-                    return trips.size();
+                    return _trips.size();
                 } //
         ));
     }
@@ -160,4 +146,18 @@ public class SearchResultComponent extends VerticalLayout {
 
         return null == price ? -1 : price.getTotalPrice();
     }
+
+    private static Comparator<TripAdapter> comparatorByPrice = (t1, t2) -> {
+        double p1 = getTotalPrice(t1);
+        double p2 = getTotalPrice(t2);
+
+        return Double.compare(p1, p2);
+    };
+
+    private static Comparator<TripAdapter> comparatorByStops = (t1, t2) -> {
+        int s1 = getStopCount(t1);
+        int s2 = getStopCount(t2);
+
+        return Integer.compare(s1, s2);
+    };
 }
