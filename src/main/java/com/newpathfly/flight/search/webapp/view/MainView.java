@@ -14,9 +14,9 @@ import com.newpathfly.flight.search.webapp.event.SearchResultPollEvent;
 import com.newpathfly.flight.search.webapp.registry.CancelPollingEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.LogEventRegistry;
 import com.newpathfly.flight.search.webapp.registry.SearchResultPollEventRegistry;
+import com.newpathfly.model.PollRequest;
 import com.newpathfly.model.PollResponse;
 import com.newpathfly.model.SearchRequest;
-import com.newpathfly.model.SearchResultPoll;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
@@ -89,7 +89,7 @@ public class MainView extends VerticalLayout {
                 return;
             }
 
-            SearchResultPoll searchResultPoll = new SearchResultPoll() //
+            PollRequest searchResultPoll = new PollRequest() //
                     .requestId(_currentRequestId) //
                     .offset(_searchResultGridComponent.size()); //
 
