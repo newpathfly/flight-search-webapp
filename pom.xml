@@ -4,20 +4,20 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.7</version>
+        <version>2.6.8</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.newpathfly</groupId>
     <artifactId>flight-search-webapp</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>flight-search-webapp</name>
     <description>a webapp for flight search</description>
 
     <properties>
         <java.version>8</java.version>
         <repackage.classifier />
-        <vaadin.version>14.7.7</vaadin.version>
+        <vaadin.version>14.8.12</vaadin.version>
     </properties>
 
     <dependencies>

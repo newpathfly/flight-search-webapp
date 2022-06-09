@@ -4,7 +4,7 @@
 
 Name | Description | Default
 ---- | ----------- | -------
-NEWPATHFLY_API_BASE_URL| base URL override for the API. | the URL provided in the [newpathfly OpenAPI spec](https://newpathfly.ticketcombine.com/).
+NEWPATHFLY_API_BASE_URL| base URL override for the API. | the URL provided in the [newpathfly OpenAPI spec](https://newpathfly.ticketcombine.com/). E.g. `http://uat-api.newpathfly.com/v2`
 
 ## Usage
 
