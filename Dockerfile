@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=maven:3-amazoncorretto-8
+ARG BASE_IMAGE=maven:3-jdk-8-slim
 
 FROM ${BASE_IMAGE} AS buildtime
 
@@ -13,9 +13,7 @@ RUN mvn dependency:go-offline -B
 COPY . .
 RUN mvn clean install -Dmaven.test.skip=true -P production
 
-FROM amazoncorretto:8-alpine-jdk as runtime
-
-RUN apk add bash unzip curl aria2
+FROM openjdk:8-slim as runtime
 
 WORKDIR /app
 COPY --from=buildtime /src/target/flight-search-webapp-*.jar ./
