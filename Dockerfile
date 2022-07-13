@@ -7,11 +7,11 @@ WORKDIR /src
 # download all dependencies
 # (as long as ./pom.xml stays the same, this step will be cached.)
 COPY ./pom.xml ./pom.xml
-RUN mvn dependency:go-offline -B
+RUN --mount=type=cache,id=m2-repository,sharing=shared,target=/root/.m2/repository mvn dependency:go-offline -B
 
 # compile and package
 COPY . .
-RUN mvn clean install -Dmaven.test.skip=true -P production
+RUN --mount=type=cache,id=m2-repository,sharing=shared,target=/root/.m2/repository mvn clean install -Dmaven.test.skip=true -P production
 
 FROM openjdk:8-slim as runtime
 
